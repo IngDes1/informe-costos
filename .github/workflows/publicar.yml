@@ -1,0 +1,100 @@
+# Publica el informe de costos en GitHub Pages.
+# Cada 15 minutos (y a pedido) toma el Excel de una de estas fuentes, en este orden:
+#   1. SharePoint con aplicación de Microsoft Entra (secretos TENANT_ID, CLIENT_ID, CLIENT_SECRET, EXCEL_URL) — requiere TI.
+#   2. Enlace de SharePoint "Cualquier persona con el vínculo" (solo el secreto EXCEL_URL) — no requiere TI.
+#   3. El archivo datos/costos.xlsx del repositorio (modo manual).
+name: Publicar informe
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # GitHub puede demorar algunos minutos en ejecutar las tareas programadas
+  workflow_dispatch:          # botón "Run workflow" en la pestaña Actions
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    env:
+      TENANT_ID: ${{ secrets.TENANT_ID }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      EXCEL_URL: ${{ secrets.EXCEL_URL }}
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar la carpeta del sitio
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+
+      - name: Copiar el Excel desde SharePoint
+        id: sharepoint
+        if: ${{ env.TENANT_ID != '' && env.CLIENT_ID != '' && env.CLIENT_SECRET != '' && env.EXCEL_URL != '' }}
+        run: |
+          set -euo pipefail
+          TOKEN=$(curl -sS -X POST "https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token" \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode "client_secret=${CLIENT_SECRET}" \
+            --data-urlencode "scope=https://graph.microsoft.com/.default" \
+            --data-urlencode "grant_type=client_credentials" | jq -r '.access_token // empty')
+          if [ -z "$TOKEN" ]; then echo "::error::No se obtuvo el token de Microsoft. Revise TENANT_ID, CLIENT_ID y CLIENT_SECRET."; exit 1; fi
+          SHARE_ID="u!$(printf '%s' "$EXCEL_URL" | base64 -w0 | tr '/+' '_-' | tr -d '=')"
+          CODE=$(curl -sS -L -o _site/costos.xlsx -w '%{http_code}' \
+            -H "Authorization: Bearer ${TOKEN}" \
+            "https://graph.microsoft.com/v1.0/shares/${SHARE_ID}/driveItem/content")
+          if [ "$CODE" != "200" ]; then echo "::error::SharePoint respondió ${CODE} al descargar el Excel. Revise EXCEL_URL y los permisos de la aplicación."; exit 1; fi
+          if [ "$(head -c 2 _site/costos.xlsx)" != "PK" ]; then echo "::error::El archivo descargado no es un Excel (.xlsx)."; exit 1; fi
+          echo "Excel copiado desde SharePoint: $(stat -c %s _site/costos.xlsx) bytes"
+
+      - name: Copiar el Excel desde el enlace de SharePoint
+        id: enlace
+        if: ${{ steps.sharepoint.conclusion != 'success' && env.EXCEL_URL != '' }}
+        run: |
+          set -euo pipefail
+          case "$EXCEL_URL" in *\?*) URL="${EXCEL_URL}&download=1" ;; *) URL="${EXCEL_URL}?download=1" ;; esac
+          CODE=$(curl -sS -L -c cookies.txt -b cookies.txt -A "Mozilla/5.0" -o _site/costos.xlsx -w '%{http_code}' "$URL")
+          if [ "$CODE" != "200" ]; then echo "::error::SharePoint respondió ${CODE}. Revise que el enlace EXCEL_URL sea de tipo 'Cualquier persona con el vínculo' y siga vigente."; exit 1; fi
+          if [ "$(head -c 2 _site/costos.xlsx)" != "PK" ]; then echo "::error::El enlace no entregó el Excel (pidió iniciar sesión). Cree el enlace con 'Cualquier persona con el vínculo' y sin 'Bloquear descarga'."; exit 1; fi
+          echo "Excel copiado desde el enlace de SharePoint: $(stat -c %s _site/costos.xlsx) bytes"
+
+      - name: Usar el Excel del repositorio (modo manual)
+        if: ${{ steps.sharepoint.conclusion != 'success' && steps.enlace.conclusion != 'success' }}
+        run: |
+          if [ -f datos/costos.xlsx ]; then
+            cp datos/costos.xlsx _site/costos.xlsx
+            echo "Se publica datos/costos.xlsx del repositorio."
+          else
+            echo "::error::No hay secretos de SharePoint ni archivo datos/costos.xlsx. Configure uno de los dos."
+            exit 1
+          fi
+
+      - name: Evitar que buscadores indexen el sitio
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+
+      - name: Empaquetar el sitio
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: despliegue
+        uses: actions/deploy-pages@v4
