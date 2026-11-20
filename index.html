@@ -340,6 +340,148 @@ footer .lg-dark{display:none}
   .sb{grid-template-columns:84px minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ======== v3: navegación portafolio → ficha → detalle ======== */
+.view:not([hidden]){display:flex;flex-direction:column;gap:22px}
+.view .alerts{margin-top:-8px}
+.crumbbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.crumbbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;padding-block:10px;flex-wrap:wrap}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:14px;min-width:0;flex-wrap:wrap}
+.crumbs a{color:var(--ink-2);text-decoration:none;font-weight:500;padding:4px 2px;border-radius:6px}
+.crumbs a:hover{color:var(--ink)}
+.crumbs .sep{color:var(--ink-3)}
+.crumbs .cur{color:var(--ink);font-weight:600}
+.steps{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ink-3)}
+.steps span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--surface-2)}
+.steps span.on{background:var(--band);color:#fff}
+.steps i{font-style:normal;font-weight:600}
+.bar-actions{display:flex;gap:8px;align-items:center}
+.btn-soft{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.btn-soft:hover{border-color:var(--verde)}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 20px;flex-wrap:wrap}
+.sec-h h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sec-h p{margin:4px 0 0;color:var(--ink-2);font-size:13px;max-width:70ch}
+
+/* Portafolio */
+.plist{display:flex;flex-direction:column;gap:22px}
+.pgroup{display:flex;flex-direction:column;gap:2px}
+.pg-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap;padding:0 4px 8px;border-bottom:2px solid var(--ink)}
+.pg-h h3{margin:0;font-size:16px;font-weight:700}
+.pg-h span{font-size:12px;color:var(--ink-2)}
+.pg-cols{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.6fr) 110px 96px 104px 18px;gap:14px;padding:8px 10px 4px;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.pg-cols .r{text-align:right}
+.prow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.6fr) 110px 96px 104px 18px;gap:14px;align-items:center;padding:12px 10px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;border-radius:10px}
+.prow:hover{background:var(--surface-2)}
+.prow .code{font-weight:700;font-size:15px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.prow .name{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbars{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pbar{height:12px;border-radius:0 4px 4px 0;min-width:2px}
+.pbar.a{background:var(--act)}.pbar.m{background:var(--mej)}
+.pnum{display:flex;flex-direction:column;gap:2px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+.pnum .a{color:var(--ink-2)}.pnum .m{font-weight:700}
+.psave{text-align:right;font-variant-numeric:tabular-nums}
+.psave b{display:block;color:var(--verde-txt);font-size:15px}
+.psave small{color:var(--ink-3);font-size:11px}
+.pempty{padding:14px 10px;color:var(--ink-3);font-size:13px;border-bottom:1px solid var(--line)}
+.stage-t{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+.stage-t th{font-size:11px;font-weight:500;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+.stage-t th:first-child,.stage-t td:first-child{text-align:left}
+.stage-t td{padding:10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.stage-t tbody tr{cursor:pointer}.stage-t tbody tr:hover td{background:var(--surface-2)}
+.stage-t .chg{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-start}
+.stage-t td.l{text-align:left}
+
+/* Ficha */
+.ref-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.ref-head h2{margin:2px 0 0;font-size:clamp(26px,3.4vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.ref-head p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.ref-head .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.rnav{display:flex;gap:8px}
+.rnav a{display:inline-flex;align-items:center;gap:6px;font-size:13px;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;white-space:nowrap}
+.rnav a:hover{border-color:var(--verde)}
+.rnav a[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) 190px minmax(0,1fr);gap:14px;align-items:stretch}
+.scn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.scn.m{border:2px solid var(--mej)}
+.scn .lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.scn .lbl i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.scn .big{appearance:none;background:none;border:0;padding:0;text-align:left;font-size:clamp(30px,3.6vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1;cursor:pointer;color:var(--ink);font-variant-numeric:tabular-nums}
+.scn .big:hover{color:var(--verde-txt)}
+.scn .stack{height:34px}
+.rlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rbtn{appearance:none;text-align:left;background:var(--surface-2);border:1px solid transparent;border-radius:10px;padding:8px 10px;cursor:pointer;min-width:0}
+.rbtn:hover{border-color:var(--verde)}
+.rbtn .t{font-size:11px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+.rbtn .v{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.rbtn .s{font-size:11px;color:var(--ink-3)}
+.rbtn .dv{font-size:11px;color:var(--verde-txt);font-weight:600}
+.dbadge{background:var(--band);color:#fff;border-radius:var(--r);padding:18px 16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:6px}
+.dbadge .t{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--band-ink-2)}
+.dbadge .v{font-size:30px;font-weight:700;color:var(--verde);line-height:1;font-variant-numeric:tabular-nums}
+.dbadge .s{font-size:13px;color:#D5DACD;font-variant-numeric:tabular-nums}
+.dbadge button{appearance:none;border:1px solid var(--band-line);background:var(--band-2);color:#fff;border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;margin-top:4px}
+.dbadge button:hover{border-color:var(--verde)}
+.flow6{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:8px}
+.fs{appearance:none;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;cursor:pointer;min-width:0;position:relative;color:inherit}
+.fs:hover{border-color:var(--verde)}
+.fs.chg{border:2px solid var(--mej)}
+.fs .fn{font-size:11px;color:var(--ink-3);font-weight:500}
+.fs .ft{font-weight:700;font-size:14px;line-height:1.2}
+.fs ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.fs li{font-size:11px;color:var(--ink-2);display:flex;justify-content:space-between;gap:4px}
+.fs li.elim{color:var(--crit);text-decoration:line-through}
+.fs li.mej{color:var(--verde-txt);font-weight:600}
+.fs li.na{color:var(--ink-3)}
+.fs .fv{margin-top:auto;border-top:1px dashed var(--line);padding-top:8px;display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:11px;font-variant-numeric:tabular-nums}
+.fs .fv span{color:var(--ink-3)}
+.fs .fv b{text-align:right;font-size:13px}
+.fs .fv b.m{color:var(--ink)}
+.fs .fv b.d{color:var(--verde-txt)}
+.fs .fv b.z{color:var(--ink-3);font-weight:400}
+.cmp-wrap{overflow-x:auto;margin:0 -22px;padding:0 22px}
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:860px}
+.cmp th{font-size:11px;font-weight:600;padding:8px 6px;text-align:right;color:var(--ink-2);white-space:nowrap}
+.cmp thead tr:first-child th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:8px 6px 6px}
+.cmp th.g-a{border-bottom:3px solid var(--act);text-align:center}
+.cmp th.g-m{border-bottom:3px solid var(--mej);text-align:center}
+.cmp th.g-d{border-bottom:3px solid var(--ink);text-align:center}
+.cmp th:first-child,.cmp td:first-child{text-align:left}
+.cmp td{border-bottom:1px solid var(--line);padding:2px;text-align:right}
+.cmp td.stn{padding:8px 6px;font-weight:600;white-space:nowrap}
+.cmp td.sepl,.cmp th.sepl{border-left:1px solid var(--line)}
+.n{appearance:none;background:none;border:0;width:100%;text-align:right;padding:8px 6px;border-radius:6px;font:inherit;font-variant-numeric:tabular-nums;color:var(--ink);cursor:pointer}
+.n:hover{background:var(--verde-claro);outline:1px solid var(--verde)}
+.n.z{color:var(--ink-3)}
+.n.tot{font-weight:700}
+.n.chg{color:var(--verde-txt);font-weight:600}
+.n.dif{color:var(--verde-txt);font-weight:700}
+.cmp tfoot td{background:var(--surface-2);border-bottom:0}
+.cmp tfoot tr.pct td{background:transparent;font-size:11px;color:var(--ink-3);padding:6px;text-align:right}
+.cmp tfoot tr.pct td:first-child{text-align:left}
+.hint2{font-size:12px;color:var(--ink-3);margin:10px 0 0;display:flex;align-items:center;gap:6px}
+.hint2 svg{width:14px;height:14px}
+details.card summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"+";font-size:20px;color:var(--ink-3)}
+details.card[open] summary::after{content:"–"}
+details.card[open] summary{margin-bottom:14px}
+.d-back{appearance:none;background:none;border:0;color:var(--verde);font-size:12px;cursor:pointer;padding:0;margin-bottom:6px;display:inline-flex;gap:4px;align-items:center}
+.d-back:hover{text-decoration:underline}
+.d-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:4px 14px;align-items:center}
+.pt td button.n{padding:4px 6px}
+@media (max-width:980px){
+  .compare{grid-template-columns:minmax(0,1fr)}
+  .dbadge{flex-direction:row;flex-wrap:wrap;justify-content:space-between;text-align:left}
+  .flow6{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pg-cols{display:none}
+  .prow{grid-template-columns:minmax(0,1fr) auto 18px;grid-template-areas:"id save ch" "bars bars bars" "num num num"}
+  .prow .pid{grid-area:id}.prow .pbars{grid-area:bars}.prow .pnum{grid-area:num;flex-direction:row;justify-content:space-between}.prow .psave{grid-area:save}.prow .pctl{display:none}.prow .chev{grid-area:ch}
+}
+@media (max-width:620px){
+  .flow6{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rlist{grid-template-columns:minmax(0,1fr)}
+  .steps{display:none}
+}
 </style>
 
 <div class="band">
@@ -365,51 +507,42 @@ footer .lg-dark{display:none}
   </div>
 </div>
 
-<nav class="tabs" aria-label="Secciones">
-  <div class="wrap" role="tablist">
-    <button class="tab" role="tab" id="t-futbol" data-view="futbol" aria-selected="true">Fútbol <span class="count" id="c-futbol"></span></button>
-    <button class="tab" role="tab" id="t-baloncesto" data-view="baloncesto" aria-selected="false">Baloncesto <span class="count" id="c-bal"></span></button>
-    <button class="tab" role="tab" id="t-supuestos" data-view="supuestos" aria-selected="false">Supuestos de mejora</button>
+
+<nav class="crumbbar" aria-label="Navegación">
+  <div class="wrap">
+    <div class="crumbs" id="crumbs"></div>
+    <div class="steps" aria-hidden="true"><span id="st1"><i>1</i> Portafolio</span><span id="st2"><i>2</i> Ficha de referencia</span><span id="st3"><i>3</i> Detalle de cada dato</span></div>
+    <div class="bar-actions"><button type="button" class="btn btn-soft" id="btnSup">Supuestos de mejora</button></div>
   </div>
 </nav>
 
 <main>
   <div class="wrap">
     <div class="banner" id="banner" hidden></div>
-    <div class="gate" id="gate" hidden><div class="eyebrow" style="color:var(--verde-txt)">Datos del Excel de costos</div><h2 id="gateT">Conectando con SharePoint…</h2><p id="gateP">El informe lee el Excel de costos publicado junto a esta página.</p><button type="button" class="btn" id="gateBtn" hidden>Iniciar sesión con Microsoft</button></div>
-    <!-- FÚTBOL -->
-    <section class="view" id="v-futbol" aria-labelledby="t-futbol">
-      <div class="toolbar">
-        <div class="filters">
-          <div><span class="flabel">Construcción</span><span class="seg" id="fCons"></span></div>
-          <div><span class="flabel">Modalidad de ensamble</span><span class="seg" id="fModa"></span></div>
-        </div>
-        <div class="scenario-key"><span class="key"><i class="sw" style="background:var(--act)"></i>Proceso actual</span><span class="key"><i class="sw" style="background:var(--mej)"></i>Con mejoras</span></div>
+    <div class="gate" id="gate" hidden><div class="eyebrow" style="color:var(--verde-txt)">Datos del Excel de costos</div><h2 id="gateT">Cargando datos…</h2><p id="gateP">El informe lee el Excel de costos publicado junto a esta página.</p><button type="button" class="btn" id="gateBtn" hidden></button></div>
+
+    <!-- NIVEL 1: PORTAFOLIO -->
+    <section class="view" id="vPort" hidden>
+      <div class="sec-h">
+        <div><div class="eyebrow" style="color:var(--verde-txt)">Paso 1 · Visión general</div><h2>Portafolio</h2><p>Costo por balón de cada referencia en el proceso actual y con las mejoras implementadas. Clic en una referencia para abrir su ficha; clic en cualquier cifra para ver de dónde sale.</p></div>
+        <div class="filters"><span class="flabel">Construcción</span><span class="seg" id="fCons"></span></div>
       </div>
       <div class="kpis" id="kpis"></div>
-      <div class="grid2">
-        <div class="card">
-          <div class="card-h"><div><h2>Costo por etapa del proceso</h2><p class="hint">Promedio por balón. Clic en una etapa para ver cada referencia.</p></div></div>
-          <div class="stages" id="stages"></div>
-        </div>
-        <div class="card">
-          <div class="card-h"><div><h2>Composición por rubro</h2><p class="hint">Promedio por balón. Clic en un rubro para ver su reparto por etapa.</p></div></div>
-          <div class="comp" id="comp"></div>
-        </div>
+      <div class="card">
+        <div class="card-h"><div><h2>Referencias del portafolio</h2><p class="hint">Agrupadas por construcción. Barra gris = proceso actual · barra verde = con mejoras.</p></div><div class="scenario-key"><span class="key"><i class="sw" style="background:var(--act)"></i>Proceso actual</span><span class="key"><i class="sw" style="background:var(--mej)"></i>Con mejoras</span></div></div>
+        <div class="plist" id="plist"></div>
       </div>
       <div class="card">
-        <div class="card-h"><div><h2>Referencias</h2><p class="hint">Clic en una fila para abrir la ficha con el detalle completo.</p></div><div class="legend" id="ctlLegend"></div></div>
-        <div class="tscroll"><table class="refs" id="refs"></table></div>
+        <div class="card-h"><div><h2>Dónde cambia el costo del portafolio</h2><p class="hint">Promedio por balón por etapa del proceso (fútbol). Clic en una etapa para ver cada referencia.</p></div></div>
+        <div class="tscroll"><table class="stage-t" id="pstages"></table></div>
       </div>
     </section>
 
-    <!-- BALONCESTO -->
-    <section class="view" id="v-baloncesto" aria-labelledby="t-baloncesto" hidden></section>
-
-    <!-- SUPUESTOS -->
-    <section class="view" id="v-supuestos" aria-labelledby="t-supuestos" hidden></section>
+    <!-- NIVEL 2: FICHA -->
+    <section class="view" id="vRef" hidden></section>
   </div>
 </main>
+
 
 <footer class="foot"><div class="wrap">
   <img class="lg-light" src="data:image/webp;base64,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" alt="Grupo Y">
@@ -550,166 +683,282 @@ function buildModel(raw, meta){
   return { futbol: parseFutbol(raw["Fútbol"]||[]), bal: parseBal(raw["Baloncesto"]||[]), P: parseParams(raw["Parámetros"]||[]), meta };
 }
 
-/* ================== Estado ================== */
-let MODEL, view = "futbol", fCons = "Todas", fModa = "Todas", sortKey = "ahorro", sortDir = -1, lastFocus = null;
-function filtered(){ return MODEL.futbol.filter(r => (fCons==="Todas"||r.cons===fCons) && (fModa==="Todas"||r.moda===fModa)); }
+
+/* ================== Estado y utilidades ================== */
+let MODEL, lastFocus = null, fCons = "Todas";
 const avg = (arr, f) => arr.length ? arr.reduce((s,x)=>s+f(x),0)/arr.length : 0;
 const stTot = (r, sc, st) => RUB.reduce((s,rb)=>s+r[sc][rb][st],0);
 const rbTot = (r, sc, rb) => STG.reduce((s,st)=>s+r[sc][rb][st],0);
-function subState(name){ return MODEL.P.sup.find(s=>s.sub===name) || {estado:"Se mantiene",pct:0,factor:1}; }
-function stageTags(st){
-  return STG_SUB[st].map(subState).map((s,i)=>({s, n:STG_SUB[st][i]})).filter(x=>x.s.estado!=="Se mantiene");
+function subState(name){ return (MODEL && MODEL.P.sup.find(s=>s.sub===name)) || {estado:"Se mantiene",pct:0,factor:1,nota:""}; }
+function stageTags(st){ return STG_SUB[st].map(n=>({n, s:subState(n)})).filter(x=>x.s.estado!=="Se mantiene"); }
+function subsFor(r, st){
+  return STG_SUB[st].filter(s => !(s==="Backing" && r.cons!=="Thermotech") && !(s==="Destajo ensamble" && r.moda!=="Destajo") && !(["Pegante preforma","Rotomoldeadora","Pegante juegos","Ensamble máquina"].includes(s) && r.moda!=="Interno"));
 }
-
-/* ================== Render: Fútbol ================== */
-function renderFilters(){
-  const seg = (el, opts, cur, set) => { el.innerHTML = opts.map(o=>`<button type="button" aria-pressed="${o===cur}" data-v="${esc(o)}">${esc(o)}</button>`).join(""); el.onclick = e => { const b=e.target.closest("button"); if(!b) return; set(b.dataset.v); renderFutbol(); }; };
-  seg($("#fCons"), ["Todas","Thermotech","Laminado"], fCons, v=>fCons=v);
-  seg($("#fModa"), ["Todas","Interno","Destajo"], fModa, v=>fModa=v);
-}
-function renderKPIs(R){
-  const a = avg(R,r=>r.cact), m = avg(R,r=>r.cmej), s = a-m, sp = a? s/a : 0;
-  const nT = R.filter(r=>r.cons==="Thermotech").length, nL = R.filter(r=>r.cons==="Laminado").length;
-  const alerts = R.filter(r=>r.ctrl && r.ctrl!=="✓ OK").length;
-  const info = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>';
-  $("#kpis").innerHTML = `
-    <button class="kpi" data-k="refs"><span class="k-lbl">Referencias analizadas ${info}</span><span class="k-val num">${R.length}</span><span class="k-sub">${nT} Thermotech · ${nL} Laminado${alerts?` · <span class="pill warn">${alerts} con alertas</span>`:""}</span></button>
-    <button class="kpi" data-k="act"><span class="k-lbl">Costo promedio actual ${info}</span><span class="k-val num">${money(a)}</span><span class="k-sub">por balón · proceso de hoy</span></button>
-    <button class="kpi" data-k="mej"><span class="k-lbl">Costo promedio con mejoras ${info}</span><span class="k-val num">${money(m)}</span><span class="k-sub">por balón · ${money(s)} menos</span></button>
-    <button class="kpi hl" data-k="ahorro"><span class="k-lbl">Ahorro promedio ${info}</span><span class="k-val num">${pct(sp)}</span><span class="k-sub">${money(s)} por balón · clic para ver el origen</span></button>`;
-  $("#kpis").onclick = e => { const b = e.target.closest(".kpi"); if (!b) return;
-    const k = b.dataset.k;
-    if (k === "refs") { document.getElementById("refs").scrollIntoView({behavior:"smooth",block:"start"}); return; }
-    if (k === "ahorro") openSavings(); else openScenario(k==="act"?"A":"M");
-  };
-}
-function renderStages(R){
-  const rows = STG.map(st => ({st, a: avg(R,r=>stTot(r,"A",st)), m: avg(R,r=>stTot(r,"M",st))}));
-  const max = Math.max(1, ...rows.map(x=>Math.max(x.a,x.m)));
-  $("#stages").innerHTML = rows.map(x => {
-    const tags = stageTags(x.st).map(t => `<span class="pill ${t.s.estado==="Eliminado"?"crit":"good"}">${esc(t.n)} ${t.s.estado==="Eliminado"?"eliminado":"−"+Math.round(t.s.pct*100)+" %"}</span>`).join("");
-    const d = x.a - x.m;
-    return `<button class="stage" data-st="${x.st}" aria-label="${x.st}: actual ${money(x.a)}, con mejoras ${money(x.m)}">
-      <div><div class="s-name">${x.st}</div>${tags?`<div class="s-tags">${tags}</div>`:""}</div>
-      <div class="bars">
-        <div class="brow a" data-tip="${esc(x.st)}|Proceso actual|${x.a}"><div class="btrack"><div class="bfill act" style="width:${x.a/max*100}%"></div></div><span class="bval num">${money(x.a)}</span></div>
-        <div class="brow m" data-tip="${esc(x.st)}|Con mejoras|${x.m}"><div class="btrack"><div class="bfill mej" style="width:${x.m/max*100}%"></div></div><span class="bval num">${money(x.m)}</span></div>
-      </div>
-      <div class="delta num ${Math.abs(d)<0.5?"zero":""}">${Math.abs(d)<0.5?"sin cambio":"−"+money(d)}</div>
-    </button>`;
-  }).join("");
-  $("#stages").onclick = e => { const b = e.target.closest(".stage"); if (b) openStage(b.dataset.st, b); };
-}
-function renderComp(R){
-  const A = {}, M = {}; RUB.forEach(rb => { A[rb] = avg(R,r=>rbTot(r,"A",rb)); M[rb] = avg(R,r=>rbTot(r,"M",rb)); });
-  const ta = RUB.reduce((s,rb)=>s+A[rb],0), tm = RUB.reduce((s,rb)=>s+M[rb],0);
-  const bar = (V, tot, base, lbl) => `<div class="comp-row"><div class="c-lbl"><span>${lbl}</span><b class="num">${money(tot)}</b></div>
-    <div class="stack" style="width:${base? tot/base*100 : 0}%">${RUB.map(rb => `<button class="seg-r ${rb}" data-rb="${rb}" style="flex:${V[rb]} 1 0" data-tip="${rb}|${lbl}|${V[rb]}|${tot?V[rb]/tot:0}">${V[rb]/tot>0.12?`${rb}<span class="num">${pct(V[rb]/tot,0)}</span>`:""}</button>`).join("")}</div></div>`;
-  const big = RUB.map(rb=>({rb,d:A[rb]-M[rb]})).sort((a,b)=>b.d-a.d)[0];
-  $("#comp").innerHTML = bar(A, ta, ta, "Proceso actual") + bar(M, tm, ta, "Con mejoras") +
-    `<div class="legend">${RUB.map(rb=>`<span class="key"><i class="sw ${rb}"></i>${rb} · ${RUBN[rb]}</span>`).join("")}</div>
-     <div class="ins">${ta-tm>0.5?`El ahorro viene sobre todo de <b>${RUBN[big.rb].toLowerCase()} (${big.rb})</b>: ${money(big.d)} de ${money(ta-tm)} por balón. La MP pasa de ${pct(A.MP/ta)} a ${pct(M.MP/tm)} del costo.`:"Con los supuestos actuales no hay diferencia entre escenarios."}</div>`;
-  $("#comp").onclick = e => { const b = e.target.closest(".seg-r"); if (b) openRubro(b.dataset.rb, b); };
-}
+const futbol = () => fCons==="Todas" ? MODEL.futbol : MODEL.futbol.filter(r=>r.cons===fCons);
+const findRef = id => MODEL.futbol.find(r=>r.id===id) || MODEL.bal.refs.find(b=>b.id===id);
+const isBal = r => r && r.id && r.id[0]==="b";
+const refLabel = r => esc(r.cod) + (r.nota ? ` <span class="pill neutral">${esc(r.nota)}</span>` : "");
+const refText = r => r.cod + (r.nota ? " · " + r.nota : "");
+const dz = v => Math.abs(v) < 0.5;
+const cell = (v, cls="") => `<button type="button" class="n ${dz(v)?"z":""} ${cls}"`;
+const mz = v => dz(v) ? "—" : money(v);
 function ctlPill(r){
   if (!r.ctrl || r.ctrl === "✓ OK") return `<span class="pill good">${ICON.ok}OK</span>`;
   const n = r.ctrl.split(". ").filter(Boolean).length;
   return /Margen negativo/.test(r.ctrl) ? `<span class="pill crit">${ICON.crit}${n} alerta${n>1?"s":""}</span>` : `<span class="pill warn">${ICON.warn}${n} alerta${n>1?"s":""}</span>`;
 }
-function renderTable(R){
-  const cols = [["cod","Referencia",""],["cons","Construcción",""],["moda","Modalidad",""],["cact","Costo actual","r"],["cmej","Con mejoras","r"],["ahorro","Ahorro","r"],["mar","Margen actual","r"],["ctrl","Control",""]];
-  const data = [...R].sort((a,b)=>{ const x=a[sortKey], y=b[sortKey]; if (typeof x==="string"||typeof y==="string") return String(x).localeCompare(String(y))*sortDir; return ((x??-1e9)-(y??-1e9))*sortDir; });
-  const maxp = Math.max(0.0001, ...R.map(r=>r.ahp));
-  $("#refs").innerHTML = `<thead><tr>${cols.map(([k,l,c])=>`<th class="${c}"><button data-sort="${k}" aria-label="Ordenar por ${l}">${l}${sortKey===k?(sortDir>0?" ↑":" ↓"):""}</button></th>`).join("")}<th></th></tr></thead>
-  <tbody>${data.map(r=>`<tr data-id="${r.id}" tabindex="0">
-    <td><div class="code">${esc(r.cod)}${r.nota?` <span class="pill neutral">${esc(r.nota)}</span>`:""}</div><div class="name" title="${esc(r.nom)}">${esc(r.nom)}</div></td>
-    <td>${esc(r.cons)}</td><td>${esc(r.moda)}</td>
-    <td class="r num">${money(r.cact)}</td><td class="r num big">${money(r.cmej)}</td>
-    <td class="r"><div class="savebar"><span class="num">${money(r.ahorro)} · <b>${pct(r.ahp)}</b></span><span class="t"><i style="width:${r.ahp/maxp*100}%"></i></span></div></td>
-    <td class="r num">${r.mar===null?'<span style="color:var(--ink-3)">sin precio</span>':`<span style="${r.mar<0?"color:var(--crit);font-weight:600":""}">${pct(r.mar)}</span>`}</td>
-    <td>${ctlPill(r)}</td><td>${ICON.chev}</td></tr>`).join("") || `<tr><td colspan="9" style="color:var(--ink-3);padding:24px">No hay referencias con estos filtros.</td></tr>`}</tbody>`;
-  $("#refs").onclick = e => { const s = e.target.closest("[data-sort]"); if (s){ const k=s.dataset.sort; if (sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=(["cod","cons","moda","ctrl"].includes(k)?1:-1);} renderTable(filtered()); return; }
-    const tr = e.target.closest("tr[data-id]"); if (tr) openRef(tr.dataset.id, tr); };
-  $("#refs").onkeydown = e => { if ((e.key==="Enter"||e.key===" ") && e.target.matches("tr[data-id]")){ e.preventDefault(); openRef(e.target.dataset.id, e.target);} };
-  $("#ctlLegend").innerHTML = `<span class="key">Control: ${["OK","alerta","margen negativo"].map((t,i)=>`<span class="pill ${["good","warn","crit"][i]}">${t}</span>`).join(" ")}</span>`;
+const STEP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
+const TAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V4.5a1.5 1.5 0 0 1 3 0V12"/><path d="M12 11.5a1.5 1.5 0 0 1 3 0V13"/><path d="M15 12.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-1.5a5 5 0 0 1-4-2l-2.6-3.5a1.5 1.5 0 0 1 2.3-1.9L9 15"/></svg>';
+
+/* ================== Navegación ================== */
+function route(){
+  if (!MODEL) return;
+  const h = location.hash.slice(1);
+  if (h.startsWith("ref-")){ const r = findRef(h.slice(4)); if (r){ showRef(r); return; } }
+  showPortfolio();
 }
-function renderFutbol(){
-  renderFilters(); const R = filtered();
-  renderKPIs(R); renderStages(R); renderComp(R); renderTable(R);
+addEventListener("hashchange", () => { if ($("#drawer").classList.contains("on")) closeDrawer(true); route(); window.scrollTo({top:0}); });
+function crumbs(r){
+  $("#crumbs").innerHTML = r ? `<a href="#portafolio">Portafolio</a><span class="sep">›</span><span class="cur">${esc(refText(r))}</span>` : `<span class="cur">Portafolio</span>`;
+  $("#st1").classList.toggle("on", !r); $("#st2").classList.toggle("on", !!r);
 }
 
-/* ================== Panel lateral ================== */
-function openDrawer({eye, title, sub, chips="", body}, opener){
-  lastFocus = opener || document.activeElement;
-  $("#dEye").textContent = eye; $("#dTitle").textContent = title; $("#dSub").textContent = sub || ""; $("#dChips").innerHTML = chips; $("#dBody").innerHTML = body;
-  $("#dBody").scrollTop = 0;
-  $("#drawer").classList.add("on"); $("#scrim").classList.add("on"); $("#drawer").setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden"; setTimeout(()=>$("#dClose").focus(), 50);
+/* ================== Nivel 1: Portafolio ================== */
+function showPortfolio(){
+  $("#vPort").hidden = false; $("#vRef").hidden = true; crumbs(null);
+  const seg = $("#fCons");
+  seg.innerHTML = ["Todas","Thermotech","Laminado"].map(o=>`<button type="button" aria-pressed="${o===fCons}" data-v="${o}">${o}</button>`).join("");
+  seg.onclick = e => { const b=e.target.closest("button"); if(!b) return; fCons=b.dataset.v; showPortfolio(); };
+  const R = futbol(), a = avg(R,r=>r.cact), m = avg(R,r=>r.cmej), s = a-m;
+  const nT = R.filter(r=>r.cons==="Thermotech").length, nL = R.filter(r=>r.cons==="Laminado").length, nB = MODEL.bal.refs.length;
+  const alerts = R.filter(r=>r.ctrl && r.ctrl!=="✓ OK").length;
+  const go = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>';
+  $("#kpis").innerHTML = `
+    <button class="kpi" data-k="refs"><span class="k-lbl">Referencias de fútbol ${go}</span><span class="k-val num">${R.length}</span><span class="k-sub">${nT} Thermotech · ${nL} Laminado${fCons==="Todas"?` · ${nB} baloncesto`:""}${alerts?` · <span class="pill warn">${alerts} con alertas</span>`:""}</span></button>
+    <button class="kpi" data-k="A"><span class="k-lbl">Costo promedio actual ${go}</span><span class="k-val num">${money(a)}</span><span class="k-sub">por balón · proceso de hoy</span></button>
+    <button class="kpi" data-k="M"><span class="k-lbl">Costo promedio con mejoras ${go}</span><span class="k-val num">${money(m)}</span><span class="k-sub">por balón · ${money(s)} menos</span></button>
+    <button class="kpi hl" data-k="S"><span class="k-lbl">Ahorro promedio ${go}</span><span class="k-val num">${pct(a?s/a:0)}</span><span class="k-sub">${money(s)} por balón · ¿de dónde sale?</span></button>`;
+  $("#kpis").onclick = e => { const b=e.target.closest(".kpi"); if(!b) return; const k=b.dataset.k;
+    if (k==="refs") return $("#plist").scrollIntoView({behavior:"smooth",block:"start"});
+    if (k==="S") return openDrawer(()=>dPortSavings(), b, true);
+    openDrawer(()=>dPortScenario(k), b, true); };
+  // lista
+  const max = Math.max(1, ...MODEL.futbol.map(r=>r.cact), ...MODEL.bal.refs.map(r=>r.cact));
+  const head = `<div class="pg-cols"><span>Referencia</span><span>Costo por balón</span><span class="r">Actual · mejora</span><span class="r">Ahorro</span><span>Control</span><span></span></div>`;
+  const row = r => `<a class="prow" href="#ref-${r.id}" aria-label="Abrir ficha de ${esc(refText(r))}">
+      <div class="pid"><div class="code">${refLabel(r)}</div><div class="name" title="${esc(r.nom)}">${esc(r.nom)}</div></div>
+      <div class="pbars"><div class="pbar a" style="width:${r.cact/max*100}%" title="Actual ${money(r.cact)}"></div><div class="pbar m" style="width:${r.cmej/max*100}%" title="Con mejoras ${money(r.cmej)}"></div></div>
+      <div class="pnum"><span class="a">${money(r.cact)}</span><span class="m">${money(r.cmej)}</span></div>
+      <div class="psave"><b>−${pct(r.ahp)}</b><small>−${money(r.ahorro)}</small></div>
+      <div class="pctl">${ctlPill(r)}</div><span class="chev-w chev">${ICON.chev}</span></a>`;
+  const groups = ["Thermotech","Laminado"].filter(c=>fCons==="Todas"||fCons===c).map(c=>{
+    const G = MODEL.futbol.filter(r=>r.cons===c).sort((x,y)=>y.cact-x.cact);
+    return `<div class="pgroup"><div class="pg-h"><h3>${c} <span style="font-weight:400">· fútbol</span></h3><span>${G.length} referencia${G.length===1?"":"s"}${G.length?` · promedio ${money(avg(G,r=>r.cact))} → <b>${money(avg(G,r=>r.cmej))}</b> (−${pct(avg(G,r=>r.cact)?1-avg(G,r=>r.cmej)/avg(G,r=>r.cact):0)})`:""}</span></div>
+      ${G.length ? head + G.map(row).join("") : `<div class="pempty">No hay referencias ${c} en la hoja Fútbol.</div>`}</div>`; });
+  if (fCons==="Todas"){
+    const B = MODEL.bal.refs;
+    groups.push(`<div class="pgroup"><div class="pg-h"><h3>Baloncesto</h3><span>${B.length} referencia${B.length===1?"":"s"} · solo proceso actual (las mejoras aplican a fútbol)</span></div>
+      ${B.length ? B.map(b=>`<a class="prow" href="#ref-${b.id}"><div class="pid"><div class="code">${esc(b.cod)}</div><div class="name">${esc(b.nom)}</div></div><div class="pbars"><div class="pbar a" style="width:${b.cact/max*100}%"></div></div><div class="pnum"><span class="m">${money(b.cact)}</span></div><div class="psave"><small>sin escenario</small></div><div class="pctl"></div><span class="chev">${ICON.chev}</span></a>`).join("")
+        : `<div class="pempty">Aún no hay referencias en la hoja Baloncesto del Excel. Flujo: ${MODEL.bal.stages.map(esc).join(" → ")}.</div>`}</div>`);
+  }
+  $("#plist").innerHTML = groups.join("");
+  // etapas
+  const rows = STG.map(st=>({st, a:avg(R,r=>stTot(r,"A",st)), m:avg(R,r=>stTot(r,"M",st))}));
+  $("#pstages").innerHTML = `<thead><tr><th>Etapa</th><th>Actual</th><th>Con mejoras</th><th>Diferencia</th><th style="text-align:left">Qué cambia</th></tr></thead><tbody>${rows.map(x=>{
+    const tags = stageTags(x.st).map(t=>`<span class="pill ${t.s.estado==="Eliminado"?"crit":"good"}">${esc(t.n)} ${t.s.estado==="Eliminado"?"eliminado":"−"+Math.round(t.s.pct*100)+" %"}</span>`).join("");
+    return `<tr data-st="${x.st}" tabindex="0"><td><b>${x.st}</b><div style="font-size:11px;color:var(--ink-3)">${STG_DESC[x.st]}</div></td><td>${money(x.a)}</td><td><b>${money(x.m)}</b></td><td style="color:var(--verde-txt);font-weight:600">${dz(x.a-x.m)?'<span style="color:var(--ink-3);font-weight:400">—</span>':"−"+money(x.a-x.m)}</td><td class="l"><div class="chg">${tags||'<span style="color:var(--ink-3);font-size:12px">Sin cambios</span>'}</div></td></tr>`; }).join("")}
+    <tr class="tot" style="cursor:default"><td><b>Total</b></td><td><b>${money(a)}</b></td><td><b>${money(m)}</b></td><td style="color:var(--verde-txt);font-weight:700">−${money(s)}</td><td></td></tr></tbody>`;
+  const op = tr => { if (tr && tr.dataset.st) openDrawer(()=>dPortStage(tr.dataset.st), tr, true); };
+  $("#pstages").onclick = e => op(e.target.closest("tr[data-st]"));
+  $("#pstages").onkeydown = e => { if (e.key==="Enter") op(e.target.closest("tr[data-st]")); };
 }
-function closeDrawer(){ $("#drawer").classList.remove("on"); $("#scrim").classList.remove("on"); $("#drawer").setAttribute("aria-hidden","true"); document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
-$("#dClose").onclick = closeDrawer; $("#scrim").onclick = closeDrawer;
-document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#drawer").classList.contains("on")) closeDrawer(); });
 
-function openRef(id, opener){
-  const r = MODEL.futbol.find(x=>x.id===id); if (!r) return;
-  const P = MODEL.P.tar;
-  const chips = [r.cons, "Ensamble " + (r.moda||"").toLowerCase(), r.nota].filter(Boolean).map(c=>`<span class="pill neutral">${esc(c)}</span>`).join("");
-  const kp = `<div class="d-kpis">
-    <div class="mini"><div class="l">Costo actual</div><div class="v num">${money(r.cact)}</div><div class="s">por balón</div></div>
-    <div class="mini g"><div class="l">Con mejoras</div><div class="v num">${money(r.cmej)}</div><div class="s">${money(r.ahorro)} menos</div></div>
-    <div class="mini g"><div class="l">Ahorro</div><div class="v num">${pct(r.ahp)}</div><div class="s">sobre el costo actual</div></div>
-    <div class="mini"><div class="l">Margen</div><div class="v num" style="${r.mar!==null&&r.mar<0?"color:var(--crit)":""}">${r.mar===null?"—":pct(r.mar)}</div><div class="s">${r.mar===null?"sin precio de venta":"con mejoras: "+pct(r.marM)}</div></div></div>`;
-  // gráfico por etapa
-  const max = Math.max(1, ...STG.map(st=>Math.max(stTot(r,"A",st),stTot(r,"M",st))));
-  const stk = (sc, st) => RUB.map(rb=>{ const v=r[sc][rb][st]; return v>0.5?`<i class="${rb}" style="width:${v/max*100}%" title="${rb} ${money(v)}"></i>`:""; }).join("");
-  const sbars = `<div class="sbars">${STG.map(st=>{ const a=stTot(r,"A",st), m=stTot(r,"M",st); return `<div class="sb"><div class="n">${st}</div>
-     <div class="line a"><span class="tag">Actual</span><div class="stk" style="width:calc((100% - 130px) * ${a/max})">${stk("A",st)}</div><span class="val num">${money(a)}</span></div>
-     <div class="line m"><span class="tag">Mejora</span><div class="stk" style="width:calc((100% - 130px) * ${m/max})">${stk("M",st)}</div><span class="val num">${money(m)}${a-m>0.5?` <span style="color:var(--verde-txt)">(−${money(a-m)})</span>`:""}</span></div></div>`; }).join("")}</div>
-     <div class="legend" style="margin-top:10px">${RUB.map(rb=>`<span class="key"><i class="sw ${rb}"></i>${rb}</span>`).join("")}<span class="key" style="color:var(--ink-3)">Barra tenue = proceso actual</span></div>`;
-  // matriz
-  const matrix = `<div class="d-sec"><h4>Matriz rubro × etapa <span class="seg" id="mxMode"><button aria-pressed="true" data-m="D">Comparativo</button><button aria-pressed="false" data-m="A">Actual</button><button aria-pressed="false" data-m="M">Con mejoras</button></span></h4>
-    <div class="mx-wrap"><table class="mx" id="mx"></table></div><p class="hint" style="font-size:12px;color:var(--ink-3);margin:8px 0 0">Clic en una celda para ver cómo se calcula.</p><div id="explain" style="margin-top:10px"></div></div>`;
-  // flujo
-  const flow = `<div class="d-sec"><h4>Flujo del proceso <small>Subprocesos eliminados o mejorados según los supuestos</small></h4><div class="flow">${STG.map((st,i)=>{
-     const subs = STG_SUB[st].filter(s => !(s==="Backing" && r.cons!=="Thermotech") && !(s==="Destajo ensamble" && r.moda!=="Destajo") && !(["Pegante preforma","Rotomoldeadora","Pegante juegos","Ensamble máquina"].includes(s) && r.moda!=="Interno"));
-     const a=stTot(r,"A",st), m=stTot(r,"M",st);
-     const chg = subs.some(s=>subState(s).estado!=="Se mantiene") && a-m>0.5;
-     return `<div class="fstep ${chg?"chg":""}"><div class="fn">Etapa ${i+1}</div><div class="ft">${st}</div><div class="subs">${subs.length?subs.map(s=>{const ss=subState(s); return `<div class="sub-p ${ss.estado==="Eliminado"?"elim":ss.estado==="Mejorado"?"mej":""}"><span>${esc(s)}</span><span>${ss.estado==="Mejorado"?"−"+Math.round(ss.pct*100)+"%":""}</span></div>`;}).join(""):'<div class="sub-p" style="color:var(--ink-3)">No aplica</div>'}</div>
-       <div class="fc">Actual ${money(a)}<b class="num">${money(m)}</b></div></div>`; }).join("")}</div></div>`;
-  // insumos
+/* ================== Nivel 2: Ficha de referencia ================== */
+function showRef(r){
+  $("#vPort").hidden = true; $("#vRef").hidden = false; crumbs(r);
+  if (isBal(r)) return showBal(r);
+  const list = MODEL.futbol, i = list.indexOf(r), prev = list[i-1], next = list[i+1];
+  const chips = [r.cons, "Ensamble " + String(r.moda||"").toLowerCase(), r.pvta ? "Precio venta " + money(r.pvta) : ""].filter(Boolean).map(c=>`<span class="pill neutral">${esc(c)}</span>`).join("") + " " + ctlPill(r);
+  const scn = (sc) => { const tot = sc==="A"?r.cact:r.cmej;
+    return `<div class="scn ${sc==="M"?"m":""}"><div class="lbl"><i style="background:var(--${sc==="A"?"act":"mej"})"></i>${sc==="A"?"Proceso actual":"Proceso con mejoras"}</div>
+      <button type="button" class="big" data-act="${sc==="A"?"totA":"totM"}" title="Ver cómo se compone">${money(tot)}</button>
+      <div class="stack">${RUB.map(rb=>{ const v=rbTot(r,sc,rb); return `<button type="button" class="seg-r ${rb}" data-act="rub" data-rb="${rb}" style="flex:${v} 1 0" aria-label="${rb} ${money(v)}">${v/tot>0.12?`${rb}<span>${pct(v/tot,0)}</span>`:""}</button>`; }).join("")}</div>
+      <div class="rlist">${RUB.map(rb=>{ const v=rbTot(r,sc,rb), d=rbTot(r,"A",rb)-rbTot(r,"M",rb); return `<button type="button" class="rbtn" data-act="rub" data-rb="${rb}"><div class="t"><i class="sw ${rb}" style="background:var(--${rb.toLowerCase()})"></i>${RUBN[rb]}</div><div class="v">${money(v)}</div><div class="s">${pct(v/tot)} del costo</div>${sc==="M"&&!dz(d)?`<div class="dv">−${money(d)}</div>`:""}</button>`; }).join("")}</div></div>`; };
+  const flow = STG.map((st,k)=>{ const subs = subsFor(r,st), a=stTot(r,"A",st), m=stTot(r,"M",st), chg = !dz(a-m);
+    return `<button type="button" class="fs ${chg?"chg":""}" data-act="stage" data-st="${st}"><span class="fn">Etapa ${k+1}</span><span class="ft">${st}</span>
+      <ul>${subs.length?subs.map(s=>{ const ss=subState(s); return `<li class="${ss.estado==="Eliminado"?"elim":ss.estado==="Mejorado"?"mej":""}"><span>${esc(s)}</span><span>${ss.estado==="Mejorado"?"−"+Math.round(ss.pct*100)+"%":ss.estado==="Eliminado"?"elim.":""}</span></li>`; }).join(""):'<li class="na">No aplica</li>'}</ul>
+      <div class="fv"><span>Actual</span><b>${money(a)}</b><span>Mejora</span><b class="m">${money(m)}</b><span>Ahorro</span><b class="${chg?"d":"z"}">${chg?"−"+money(a-m):"—"}</b></div></button>`; }).join("");
+  // tabla comparativa
+  const sumA = rb => rbTot(r,"A",rb), sumM = rb => rbTot(r,"M",rb);
+  const body = STG.map(st=>{ const a=stTot(r,"A",st), m=stTot(r,"M",st);
+    return `<tr><td class="stn">${st}</td>
+      ${RUB.map((rb,j)=>`<td class="${j===0?"sepl":""}">${cell(r.A[rb][st])} data-act="cell" data-sc="A" data-rb="${rb}" data-st="${st}">${mz(r.A[rb][st])}</button></td>`).join("")}
+      <td>${cell(a,"tot")} data-act="stage" data-st="${st}">${money(a)}</button></td>
+      ${RUB.map((rb,j)=>`<td class="${j===0?"sepl":""}">${cell(r.M[rb][st], dz(r.A[rb][st]-r.M[rb][st])?"":"chg")} data-act="cell" data-sc="M" data-rb="${rb}" data-st="${st}">${mz(r.M[rb][st])}</button></td>`).join("")}
+      <td>${cell(m,"tot")} data-act="stage" data-st="${st}">${money(m)}</button></td>
+      <td class="sepl">${dz(a-m)?`<button type="button" class="n z" data-act="stage" data-st="${st}">—</button>`:`<button type="button" class="n dif" data-act="stage" data-st="${st}">−${money(a-m)}</button>`}</td></tr>`; }).join("");
+  const foot = `<tr><td class="stn">Total</td>${RUB.map((rb,j)=>`<td class="${j===0?"sepl":""}"><button type="button" class="n tot" data-act="rub" data-rb="${rb}">${money(sumA(rb))}</button></td>`).join("")}<td><button type="button" class="n tot" data-act="totA">${money(r.cact)}</button></td>
+      ${RUB.map((rb,j)=>`<td class="${j===0?"sepl":""}"><button type="button" class="n tot ${dz(sumA(rb)-sumM(rb))?"":"chg"}" data-act="rub" data-rb="${rb}">${money(sumM(rb))}</button></td>`).join("")}<td><button type="button" class="n tot" data-act="totM">${money(r.cmej)}</button></td>
+      <td class="sepl"><button type="button" class="n dif" data-act="sav">−${money(r.ahorro)}</button></td></tr>
+      <tr class="pct"><td>% del total</td>${RUB.map(rb=>`<td>${pct(sumA(rb)/r.cact,0)}</td>`).join("")}<td>100 %</td>${RUB.map(rb=>`<td>${pct(sumM(rb)/r.cmej,0)}</td>`).join("")}<td>100 %</td><td>${pct(r.ahp)}</td></tr>`;
+  const alerts = (r.ctrl && r.ctrl!=="✓ OK") ? `<div class="alerts">${r.ctrl.split(". ").map(s=>s.trim().replace(/\.$/,"")).filter(Boolean).map(s=>`<div class="alert ${/Margen negativo|doble/.test(s)?"crit":""}">${/Margen negativo|doble/.test(s)?ICON.crit:ICON.warn}<span>${esc(s)}</span></div>`).join("")}</div>` : "";
+  $("#vRef").innerHTML = `
+    <div class="ref-head"><div><div class="eyebrow" style="color:var(--verde-txt)">Paso 2 · Ficha de referencia</div><h2>${refLabel(r)}</h2><p>${esc(r.nom)}</p><div class="chips">${chips}</div></div>
+      <div class="rnav"><a href="#portafolio">← Portafolio</a><a href="${prev?"#ref-"+prev.id:"#"}" aria-disabled="${!prev}">‹ ${prev?esc(prev.cod):"Anterior"}</a><a href="${next?"#ref-"+next.id:"#"}" aria-disabled="${!next}">${next?esc(next.cod):"Siguiente"} ›</a></div></div>
+    ${alerts}
+    <div class="compare">${scn("A")}<div class="dbadge"><span class="t">Ahorro por balón</span><span class="v num">−${money(r.ahorro)}</span><span class="s">−${pct(r.ahp)} del costo actual${r.pvta?`<br>Margen ${pct(r.mar)} → ${pct(r.marM)}`:""}</span><button type="button" data-act="sav">¿De dónde sale?</button></div>${scn("M")}</div>
+    <div class="card"><div class="card-h"><div><h2>El proceso, etapa por etapa</h2><p class="hint">Subprocesos tachados = eliminados; en verde = más rápidos. Clic en una etapa para ver su detalle.</p></div></div><div class="flow6">${flow}</div></div>
+    <div class="card"><div class="card-h"><div><h2>Estructura de costos: actual vs. con mejoras</h2><p class="hint">Costo por balón por rubro (MP, MO, CIF) y etapa.</p></div></div>
+      <div class="cmp-wrap"><table class="cmp"><thead><tr><th></th><th colspan="4" class="g-a">Proceso actual</th><th colspan="4" class="g-m">Con mejoras</th><th class="g-d">Diferencia</th></tr>
+        <tr><th>Etapa</th>${RUB.map((rb,j)=>`<th class="${j===0?"sepl":""}">${rb}</th>`).join("")}<th>Total</th>${RUB.map((rb,j)=>`<th class="${j===0?"sepl":""}">${rb}</th>`).join("")}<th>Total</th><th class="sepl">Ahorro</th></tr></thead>
+        <tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>
+      <p class="hint2">${TAP} Clic en cualquier cifra para ver cómo se calcula.</p></div>
+    <details class="card"><summary>Datos de entrada del cotizador (hoja Fútbol, fila ${r.fila})</summary>${inputsHTML(r)}</details>`;
+  $("#vRef").onclick = e => { const b = e.target.closest("[data-act]"); if (!b) return; const a = b.dataset.act;
+    if (a==="cell") openDrawer(()=>dCell(r, b.dataset.rb, b.dataset.st), b, true);
+    else if (a==="stage") openDrawer(()=>dStage(r, b.dataset.st), b, true);
+    else if (a==="rub") openDrawer(()=>dRubro(r, b.dataset.rb), b, true);
+    else if (a==="sav") openDrawer(()=>dSavings(r), b, true);
+    else if (a==="totA"||a==="totM") openDrawer(()=>dTotal(r, a==="totA"?"A":"M"), b, true);
+  };
+}
+function inputsHTML(r){
   const fM = n => subState(n).factor;
   const tline = (lbl, v, f) => `<dt>${lbl}</dt><dd>${f<1&&v?`<span class="was">${dec(v)}</span>`:""}${dec(v*f)} min</dd>`;
-  const inputs = `<div class="d-sec"><h4>Insumos y tiempos <small>Tal como están en la hoja Fútbol (fila ${r.fila})</small></h4><div class="inputs">
-    <div class="ibox"><h6>Cuero · troquelado</h6>${r.c1?`<div class="desc">${esc(r.c1)} · ${esc(r.d1)}</div>`:""}<dl><dt>Precio</dt><dd>${money(r.p1)}/m²</dd><dt>Consumo</dt><dd>${dec(r.q1,3)} m²</dd>${r.c2?`<dt>Cuero 2</dt><dd>${dec(r.q2,3)} m² × ${money(r.p2)}</dd>`:""}${tline("Troquelado",r.tt,fM("Troquelado"))}</dl></div>
-    <div class="ibox"><h6>Preforma</h6>${r.pc?`<div class="desc">${esc(r.pc)} · ${esc(r.pd)}</div>`:""}<dl><dt>Valor actual</dt><dd>${money(r.pv)}</dd><dt>Con mejoras</dt><dd>${money(stTot(r,"M","Preforma"))}</dd><dt>Estampado (destajo)</dt><dd>${money(r.dest)}</dd></dl></div>
-    <div class="ibox"><h6>Backing</h6>${r.bc?`<div class="desc">${esc(r.bc)} · ${esc(r.bd)}</div><dl><dt>Lámina</dt><dd>${money(r.bv)}</dd><dt>Consumo</dt><dd>${dec(r.bq,3)}</dd><dt>Costo</dt><dd>${money(r.bv*r.bq)}</dd></dl>`:'<div class="desc">No lleva backing (Laminado).</div>'}</div>
+  return `<div class="inputs">
+    <div class="ibox"><h6>Cuero · troquelado</h6>${r.c1?`<div class="desc">${esc(r.c1)} · ${esc(r.d1)}</div>`:""}<dl><dt>Precio cuero 1</dt><dd>${money(r.p1)}/m²</dd><dt>Consumo</dt><dd>${dec(r.q1,3)} m²</dd>${r.c2?`<dt>Cuero 2</dt><dd>${dec(r.q2,3)} m² × ${money(r.p2)}</dd>`:""}${tline("Troquelado",r.tt,fM("Troquelado"))}</dl></div>
+    <div class="ibox"><h6>Estampado y preforma</h6>${r.pc?`<div class="desc">${esc(r.pc)} · ${esc(r.pd)}</div>`:""}<dl><dt>Destajo estampado</dt><dd>${money(r.dest)}</dd><dt>Valor preforma</dt><dd>${money(r.pv)}</dd><dt>Preforma con mejoras</dt><dd>${money(stTot(r,"M","Preforma"))}</dd></dl></div>
+    <div class="ibox"><h6>Backing</h6>${r.bc?`<div class="desc">${esc(r.bc)} · ${esc(r.bd)}</div><dl><dt>Lámina</dt><dd>${money(r.bv)}</dd><dt>Consumo</dt><dd>${dec(r.bq,3)}</dd></dl>`:'<div class="desc">No lleva backing (Laminado).</div>'}</div>
     <div class="ibox"><h6>Ensamble</h6><dl>${r.moda==="Destajo"?`<dt>Destajo</dt><dd>${money(r.de)}</dd>`:""}${tline("Pegante preforma",r.e1,fM("Pegante preforma"))}${tline("Rotomoldeadora",r.e2,fM("Rotomoldeadora"))}${tline("Pegante juegos",r.e3,fM("Pegante juegos"))}${tline("Ensamble máquina",r.e4,fM("Ensamble máquina"))}</dl></div>
     <div class="ibox"><h6>Terminado</h6><dl>${tline("Planchado",r.t1,fM("Planchado"))}${tline("Resinado",r.t2,fM("Resinado"))}${tline("Termoempaque",r.t3,fM("Termoempaque"))}</dl></div>
-    <div class="ibox"><h6>Comercial y productividad</h6><dl><dt>Precio de venta</dt><dd>${r.pvta?money(r.pvta):"—"}</dd><dt>Costo SAP actual</dt><dd>${r.sapc?money(r.sapc):"—"}</dd>${r.sapc?`<dt>Dif. vs SAP</dt><dd>${money(r.cact-r.sapc)}</dd>`:""}<dt>Tarea ensamble</dt><dd>${r.A.tar?dec(r.A.tar,1)+" → "+dec(r.M.tar,1):"—"} bal/día</dd></dl></div>
-  </div></div>`;
-  const al = (r.ctrl && r.ctrl!=="✓ OK") ? r.ctrl.split(". ").map(s=>s.trim().replace(/\.$/,"")).filter(Boolean).map(s=>`<div class="alert ${/Margen negativo|doble/.test(s)?"crit":""}">${/Margen negativo|doble/.test(s)?ICON.crit:ICON.warn}<span>${esc(s)}</span></div>`).join("") : `<div class="alert ok">${ICON.ok}<span>Sin observaciones en el control del cotizador.</span></div>`;
-  const body = kp + `<div class="d-sec"><h4>Costo por etapa y rubro</h4>${sbars}</div>` + matrix + flow + inputs + `<div class="d-sec"><h4>Control del cotizador</h4><div class="alerts">${al}</div></div>`;
-  openDrawer({eye: "Referencia · " + r.cons, title: r.cod + (r.nota? " · " + r.nota : ""), sub: r.nom, chips, body}, opener);
-  let mode = "D"; const draw = () => renderMatrix(r, mode);
-  draw();
-  $("#mxMode").onclick = e => { const b=e.target.closest("button"); if(!b) return; mode=b.dataset.m; [...$("#mxMode").children].forEach(x=>x.setAttribute("aria-pressed", x===b)); draw(); $("#explain").innerHTML=""; };
+    <div class="ibox"><h6>Comercial y productividad</h6><dl><dt>Precio de venta</dt><dd>${r.pvta?money(r.pvta):"—"}</dd><dt>Costo SAP actual</dt><dd>${r.sapc?money(r.sapc):"—"}</dd><dt>Tarea ensamble</dt><dd>${r.A.tar?dec(r.A.tar,1)+" → "+dec(r.M.tar,1):"—"} bal/día</dd></dl></div></div>
+    <p class="hint2">Tiempos tachados = valor actual; al lado, el valor con mejoras.</p>`;
 }
-function renderMatrix(r, mode){
-  const cell = (rb, st) => { const a=r.A[rb][st], m=r.M[rb][st];
-    if (mode==="A") return money(a); if (mode==="M") return money(m);
-    return Math.abs(a-m)<0.5 ? money(a) : `${money(m)}<small>antes ${money(a)}</small>`; };
-  const tot = (sc, rb) => rbTot(r, sc, rb);
-  const head = `<thead><tr><th>Rubro</th>${STG.map(s=>`<th>${s}</th>`).join("")}<th>Total</th><th>%</th></tr></thead>`;
-  const tc = mode==="M"?r.cmej:r.cact;
-  const rows = RUB.map(rb => { const tA=tot("A",rb), tM=tot("M",rb); const t = mode==="A"?tA:tM;
-    return `<tr><td><span class="rdot" style="background:var(--${rb.toLowerCase()})"></span>${rb}</td>${STG.map(st=>`<td class="cell ${mode==="D"&&Math.abs(r.A[rb][st]-r.M[rb][st])>=0.5?"dn":""}" data-rb="${rb}" data-st="${st}" tabindex="0">${cell(rb,st)}</td>`).join("")}
-      <td><b>${money(t)}</b>${mode==="D"&&Math.abs(tA-tM)>=0.5?`<small>antes ${money(tA)}</small>`:""}</td><td>${pct(t/(mode==="A"?r.cact:r.cmej),0)}</td></tr>`; }).join("");
-  const stT = STG.map(st => { const a=stTot(r,"A",st), m=stTot(r,"M",st); return `<td>${mode==="A"?money(a):money(m)}${mode==="D"&&Math.abs(a-m)>=0.5?`<small>antes ${money(a)}</small>`:""}</td>`; }).join("");
-  $("#mx").innerHTML = head + `<tbody>${rows}<tr class="tot"><td>Total</td>${stT}<td>${money(mode==="A"?r.cact:r.cmej)}${mode==="D"?`<small>antes ${money(r.cact)}</small>`:""}</td><td>100 %</td></tr></tbody>`;
-  const pick = td => { $("#mx").querySelectorAll("td.sel").forEach(x=>x.classList.remove("sel")); td.classList.add("sel"); $("#explain").innerHTML = explain(r, td.dataset.rb, td.dataset.st); };
-  $("#mx").onclick = e => { const td = e.target.closest("td.cell"); if (td) pick(td); };
-  $("#mx").onkeydown = e => { if ((e.key==="Enter"||e.key===" ") && e.target.matches("td.cell")){ e.preventDefault(); pick(e.target);} };
+function showBal(b){
+  const S = b.stages, tot = b.cact;
+  $("#vRef").innerHTML = `<div class="ref-head"><div><div class="eyebrow" style="color:var(--verde-txt)">Paso 2 · Ficha de referencia · Baloncesto</div><h2>${esc(b.cod)}</h2><p>${esc(b.nom)}</p></div><div class="rnav"><a href="#portafolio">← Portafolio</a></div></div>
+    <div class="compare" style="grid-template-columns:minmax(0,1fr)"><div class="scn"><div class="lbl"><i style="background:var(--act)"></i>Proceso actual · sin escenario de mejora</div><div class="big" style="cursor:default">${money(tot)}</div>
+      <div class="rlist">${RUB.map(rb=>{ const v=S.reduce((s,st)=>s+b.A[rb][st],0); return `<div class="rbtn" style="cursor:default"><div class="t">${RUBN[rb]}</div><div class="v">${money(v)}</div><div class="s">${pct(tot?v/tot:0)} del costo</div></div>`; }).join("")}</div></div></div>
+    <div class="card"><div class="card-h"><div><h2>Estructura de costos por etapa</h2></div></div><div class="cmp-wrap"><table class="cmp" style="min-width:${180+S.length*100}px"><thead><tr><th>Rubro</th>${S.map(s=>`<th>${esc(s)}</th>`).join("")}<th>Total</th></tr></thead>
+      <tbody>${RUB.map(rb=>`<tr><td class="stn">${rb}</td>${S.map(st=>`<td><button type="button" class="n ${dz(b.A[rb][st])?"z":""}" data-rb="${rb}" data-st="${esc(st)}">${mz(b.A[rb][st])}</button></td>`).join("")}<td><b>${money(S.reduce((s,st)=>s+b.A[rb][st],0))}</b></td></tr>`).join("")}</tbody>
+      <tfoot><tr><td class="stn">Total</td>${S.map(st=>`<td style="padding:8px 6px"><b>${money(RUB.reduce((s,rb)=>s+b.A[rb][st],0))}</b></td>`).join("")}<td style="padding:8px 6px"><b>${money(tot)}</b></td></tr></tfoot></table></div>
+      <p class="hint2">${TAP} Clic en una cifra para ver su peso en el costo.</p></div>`;
+  $("#vRef").onclick = e => { const t = e.target.closest("button.n[data-rb]"); if (!t) return; const rb=t.dataset.rb, st=t.dataset.st, v=b.A[rb][st];
+    openDrawer(()=>({eye:"Baloncesto · "+b.cod, title:`${rb} · ${st}`, sub:RUBN[rb], body:`<div class="explain"><div class="ex-grid"><div><div class="ex-t">Valor digitado</div><div class="ex-v">${money(v)}</div></div><div><div class="ex-t">Peso en el costo</div><div class="ex-v">${pct(tot?v/tot:0)}</div></div></div><ul><li>Dato ingresado en la hoja Baloncesto del Excel.</li><li>Etapa ${esc(st)}: ${pct(tot?RUB.reduce((s,r2)=>s+b.A[r2][st],0)/tot:0)} del costo total.</li></ul></div>`}), t, true); };
 }
+
+/* ================== Nivel 3: detalle (panel lateral con historial) ================== */
+let DSTACK = [];
+function openDrawer(fn, opener, reset){
+  if (reset){ DSTACK = []; lastFocus = opener || document.activeElement; }
+  DSTACK.push(fn); paintDrawer();
+  $("#drawer").classList.add("on"); $("#scrim").classList.add("on"); $("#drawer").setAttribute("aria-hidden","false"); $("#drawer").inert = false;
+  document.body.style.overflow = "hidden"; $("#st3").classList.add("on"); setTimeout(()=>$("#dClose").focus(), 50);
+}
+function paintDrawer(){
+  const c = DSTACK.at(-1)();
+  $("#dEye").textContent = c.eye; $("#dTitle").textContent = c.title; $("#dSub").textContent = c.sub || ""; $("#dChips").innerHTML = c.chips || "";
+  $("#dBody").innerHTML = (DSTACK.length>1 ? `<button type="button" class="d-back" id="dBack">‹ Volver</button>` : "") + c.body;
+  $("#dBody").scrollTop = 0;
+  if ($("#dBack")) $("#dBack").onclick = () => { DSTACK.pop(); paintDrawer(); };
+  $("#dBody").querySelectorAll("[data-go]").forEach(el => el.onclick = () => { const [k,a,b2,c2] = el.dataset.go.split("|"); const r = findRef(a);
+    if (k==="cell") openDrawer(()=>dCell(r,b2,c2)); else if (k==="stage") openDrawer(()=>dStage(r,b2)); else if (k==="rub") openDrawer(()=>dRubro(r,b2)); else if (k==="sav") openDrawer(()=>dSavings(r));
+    else if (k==="pstage") openDrawer(()=>dPortStage(a)); else if (k==="ref"){ closeDrawer(true); location.hash = "ref-"+a; } });
+}
+function closeDrawer(silent){ $("#drawer").classList.remove("on"); $("#scrim").classList.remove("on"); $("#drawer").setAttribute("aria-hidden","true"); $("#drawer").inert = true; document.body.style.overflow = ""; $("#st3").classList.remove("on"); DSTACK = []; if (!silent && lastFocus && lastFocus.focus) lastFocus.focus(); }
+$("#dClose").onclick = () => closeDrawer(); $("#scrim").onclick = () => closeDrawer();
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#drawer").classList.contains("on")) closeDrawer(); });
+const goBtn = (go, html, cls="n") => `<button type="button" class="${cls}" data-go="${go}">${html}</button>`;
+const subLine = r => r.cod + (r.nota ? " · " + r.nota : "") + " · " + r.cons;
+
+function dCell(r, rb, st){
+  const a = r.A[rb][st], m = r.M[rb][st], ta = stTot(r,"A",st);
+  return {eye:"Detalle de una cifra · " + refText(r), title:`${rb} de la etapa ${st}`, sub:RUBN[rb] + " · " + STG_DESC[st],
+    body: explain(r, rb, st) + `<div class="d-kpis" style="margin-top:14px">
+      <div class="mini"><div class="l">Peso en la etapa</div><div class="v num">${pct(ta?a/ta:0)}</div><div class="s">del costo de ${st}</div></div>
+      <div class="mini"><div class="l">Peso en el balón</div><div class="v num">${pct(r.cact?a/r.cact:0)}</div><div class="s">del costo actual</div></div>
+      <div class="mini g"><div class="l">Ahorro</div><div class="v num">${dz(a-m)?"—":money(a-m)}</div><div class="s">${dz(a-m)?"sin cambio":pct(a?(a-m)/a:0)+" de esta cifra"}</div></div>
+      <div class="mini"><div class="l">Promedio portafolio</div><div class="v num">${money(avg(MODEL.futbol,x=>x.A[rb][st]))}</div><div class="s">${rb} ${st}, actual</div></div></div>
+      <div class="d-sec" style="margin-top:14px"><h4>Ver también</h4><div style="display:flex;gap:8px;flex-wrap:wrap">${goBtn(`stage|${r.id}|${st}`,`Toda la etapa ${st}`,"btn btn-soft")}${goBtn(`rub|${r.id}|${rb}`,`Todo el ${rb} del balón`,"btn btn-soft")}</div></div>`};
+}
+function dStage(r, st){
+  const a = stTot(r,"A",st), m = stTot(r,"M",st), subs = subsFor(r,st);
+  return {eye:"Etapa del proceso · " + refText(r), title: st, sub: STG_DESC[st],
+    body:`<div class="d-kpis"><div class="mini"><div class="l">Actual</div><div class="v num">${money(a)}</div><div class="s">${pct(r.cact?a/r.cact:0)} del balón</div></div>
+      <div class="mini g"><div class="l">Con mejoras</div><div class="v num">${money(m)}</div><div class="s">${pct(r.cmej?m/r.cmej:0)} del balón</div></div>
+      <div class="mini g"><div class="l">Ahorro</div><div class="v num">${dz(a-m)?"—":money(a-m)}</div><div class="s">${dz(a-m)?"sin cambio":pct(a?(a-m)/a:0)+" de la etapa"}</div></div>
+      <div class="mini"><div class="l">Promedio portafolio</div><div class="v num">${money(avg(MODEL.futbol,x=>stTot(x,"A",st)))}</div><div class="s">etapa ${st}, actual</div></div></div>
+    <div class="d-sec"><h4>Subprocesos</h4><div class="alerts">${subs.length?subs.map(s=>{ const ss=subState(s); return `<div class="alert ${ss.estado==="Eliminado"?"crit":ss.estado==="Mejorado"?"ok":""}" ${ss.estado==="Se mantiene"?'style="background:var(--surface-2);color:var(--ink-2)"':""}>${ss.estado==="Eliminado"?ICON.crit:ICON.ok}<span><b>${esc(s)}</b>: ${ss.estado==="Eliminado"?"se elimina":ss.estado==="Mejorado"?"se reduce "+Math.round(ss.pct*100)+" %":"se mantiene"}${ss.nota?" · "+esc(ss.nota):""}</span></div>`; }).join(""):'<div class="alert" style="background:var(--surface-2);color:var(--ink-2)">No aplica para esta referencia.</div>'}</div></div>
+    <div class="d-sec"><h4>Por rubro <small>Clic en una cifra para ver cómo se calcula</small></h4><table class="pt"><thead><tr><th>Rubro</th><th>Actual</th><th>Con mejoras</th><th>Ahorro</th></tr></thead><tbody>
+      ${RUB.map(rb=>`<tr><td><span class="rdot" style="display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--${rb.toLowerCase()})"></span><b>${rb}</b> · ${RUBN[rb]}</td><td>${goBtn(`cell|${r.id}|${rb}|${st}`,money(r.A[rb][st]))}</td><td>${goBtn(`cell|${r.id}|${rb}|${st}`,"<b>"+money(r.M[rb][st])+"</b>")}</td><td class="g">${dz(r.A[rb][st]-r.M[rb][st])?"—":"−"+money(r.A[rb][st]-r.M[rb][st])}</td></tr>`).join("")}
+      <tr class="tot"><td>Total</td><td>${money(a)}</td><td>${money(m)}</td><td class="g">${dz(a-m)?"—":"−"+money(a-m)}</td></tr></tbody></table></div>`};
+}
+function dRubro(r, rb){
+  const ta = rbTot(r,"A",rb), tm = rbTot(r,"M",rb);
+  return {eye:"Rubro de costo · " + refText(r), title: rb + " · " + RUBN[rb], sub: `Reparto del ${rb} por etapa del proceso`,
+    body:`<div class="d-kpis"><div class="mini"><div class="l">${rb} actual</div><div class="v num">${money(ta)}</div><div class="s">${pct(r.cact?ta/r.cact:0)} del balón</div></div>
+      <div class="mini g"><div class="l">${rb} con mejoras</div><div class="v num">${money(tm)}</div><div class="s">${pct(r.cmej?tm/r.cmej:0)} del balón</div></div>
+      <div class="mini g"><div class="l">Ahorro en ${rb}</div><div class="v num">${dz(ta-tm)?"—":money(ta-tm)}</div><div class="s">${dz(ta-tm)?"sin cambio":pct(r.ahorro?(ta-tm)/r.ahorro:0)+" del ahorro total"}</div></div>
+      <div class="mini"><div class="l">Promedio portafolio</div><div class="v num">${money(avg(MODEL.futbol,x=>rbTot(x,"A",rb)))}</div><div class="s">${rb}, actual</div></div></div>
+    <div class="d-sec"><h4>Por etapa <small>Clic en una cifra para ver cómo se calcula</small></h4><table class="pt"><thead><tr><th>Etapa</th><th>Actual</th><th>% del ${rb}</th><th>Con mejoras</th><th>Ahorro</th></tr></thead><tbody>
+      ${STG.map(st=>`<tr><td><b>${st}</b></td><td>${goBtn(`cell|${r.id}|${rb}|${st}`,money(r.A[rb][st]))}</td><td>${ta?pct(r.A[rb][st]/ta):"—"}</td><td>${goBtn(`cell|${r.id}|${rb}|${st}`,"<b>"+money(r.M[rb][st])+"</b>")}</td><td class="g">${dz(r.A[rb][st]-r.M[rb][st])?"—":"−"+money(r.A[rb][st]-r.M[rb][st])}</td></tr>`).join("")}
+      <tr class="tot"><td>Total</td><td>${money(ta)}</td><td>100 %</td><td>${money(tm)}</td><td class="g">${dz(ta-tm)?"—":"−"+money(ta-tm)}</td></tr></tbody></table></div>`};
+}
+function dTotal(r, sc){
+  const tot = sc==="A"?r.cact:r.cmej;
+  return {eye:(sc==="A"?"Proceso actual":"Proceso con mejoras") + " · " + refText(r), title: "Costo por balón " + money(tot), sub:"Composición por etapa y rubro",
+    body:`<div class="d-sec"><h4>Por etapa <small>Clic para ver la etapa</small></h4><table class="pt"><thead><tr><th>Etapa</th>${RUB.map(rb=>`<th>${rb}</th>`).join("")}<th>Total</th><th>%</th></tr></thead><tbody>
+      ${STG.map(st=>`<tr><td>${goBtn(`stage|${r.id}|${st}`,"<b>"+st+"</b>","n")}</td>${RUB.map(rb=>`<td>${goBtn(`cell|${r.id}|${rb}|${st}`,money(r[sc][rb][st]))}</td>`).join("")}<td><b>${money(stTot(r,sc,st))}</b></td><td>${pct(tot?stTot(r,sc,st)/tot:0,0)}</td></tr>`).join("")}
+      <tr class="tot"><td>Total</td>${RUB.map(rb=>`<td>${money(rbTot(r,sc,rb))}</td>`).join("")}<td>${money(tot)}</td><td>100 %</td></tr></tbody></table></div>
+      ${sc==="M"?`<div class="d-sec"><div style="display:flex;gap:8px">${goBtn(`sav|${r.id}`,"¿De dónde sale el ahorro?","btn btn-soft")}</div></div>`:""}`};
+}
+function dSavings(r){
+  const items = []; for (const st of STG) for (const rb of RUB){ const d = r.A[rb][st]-r.M[rb][st]; if (!dz(d)) items.push({st,rb,d}); }
+  items.sort((x,y)=>y.d-x.d);
+  const sups = MODEL.P.sup.filter(s=>s.estado!=="Se mantiene" && STG.some(st=>subsFor(r,st).includes(s.sub)));
+  return {eye:"Origen del ahorro · " + refText(r), title:"Ahorro de " + money(r.ahorro) + " por balón", sub: pct(r.ahp) + " del costo actual (" + money(r.cact) + " → " + money(r.cmej) + ")",
+    body:`<div class="d-sec"><h4>Qué cambia en esta referencia</h4><div class="alerts">${sups.map(s=>`<div class="alert ${s.estado==="Eliminado"?"crit":"ok"}">${s.estado==="Eliminado"?ICON.crit:ICON.ok}<span><b>${esc(s.sub)}</b> (${esc(s.etapa)}): ${s.estado==="Eliminado"?"eliminado":"−"+Math.round(s.pct*100)+" % de tiempo"}</span></div>`).join("")||'<div class="alert">Ningún supuesto afecta esta referencia.</div>'}</div></div>
+    <div class="d-sec"><h4>Dónde se ahorra <small>Clic en una cifra para ver el cálculo</small></h4><table class="pt"><thead><tr><th>Etapa · rubro</th><th>Actual</th><th>Con mejoras</th><th>Ahorro</th><th>% del ahorro</th></tr></thead><tbody>
+      ${items.map(x=>`<tr><td><b>${x.st}</b> · ${x.rb}</td><td>${goBtn(`cell|${r.id}|${x.rb}|${x.st}`,money(r.A[x.rb][x.st]))}</td><td>${goBtn(`cell|${r.id}|${x.rb}|${x.st}`,money(r.M[x.rb][x.st]))}</td><td class="g">${money(x.d)}</td><td>${pct(r.ahorro?x.d/r.ahorro:0)}</td></tr>`).join("")}
+      <tr class="tot"><td>Total</td><td>${money(r.cact)}</td><td>${money(r.cmej)}</td><td class="g">${money(r.ahorro)}</td><td>100 %</td></tr></tbody></table></div>`};
+}
+/* portafolio */
+function dPortStage(st){
+  const R = futbol(), rows = R.map(r=>({r,a:stTot(r,"A",st),m:stTot(r,"M",st)})).sort((x,y)=>(y.a-y.m)-(x.a-x.m));
+  return {eye:"Portafolio · etapa del proceso", title: st, sub: STG_DESC[st] + " · " + R.length + " referencias",
+    body:`<div class="d-sec"><h4>Por referencia <small>Clic en la referencia para abrir su ficha, o en una cifra para ver la etapa</small></h4><div class="mx-wrap"><table class="pt"><thead><tr><th>Referencia</th>${RUB.map(rb=>`<th>${rb} actual</th><th>${rb} mejora</th>`).join("")}<th>Total actual</th><th>Total mejora</th><th>Ahorro</th></tr></thead><tbody>
+      ${rows.map(x=>`<tr><td>${goBtn(`ref|${x.r.id}`,"<b>"+esc(x.r.cod)+"</b>"+(x.r.nota?" <small>"+esc(x.r.nota)+"</small>":"")+" ›","n")}</td>${RUB.map(rb=>`<td>${goBtn(`cell|${x.r.id}|${rb}|${st}`,money(x.r.A[rb][st]))}</td><td>${goBtn(`cell|${x.r.id}|${rb}|${st}`,money(x.r.M[rb][st]))}</td>`).join("")}<td>${goBtn(`stage|${x.r.id}|${st}`,money(x.a))}</td><td>${goBtn(`stage|${x.r.id}|${st}`,"<b>"+money(x.m)+"</b>")}</td><td class="g">${dz(x.a-x.m)?"—":"−"+money(x.a-x.m)}</td></tr>`).join("")}
+      <tr class="tot"><td>Promedio</td>${RUB.map(rb=>`<td>${money(avg(R,r=>r.A[rb][st]))}</td><td>${money(avg(R,r=>r.M[rb][st]))}</td>`).join("")}<td>${money(avg(rows,x=>x.a))}</td><td>${money(avg(rows,x=>x.m))}</td><td class="g">${money(avg(rows,x=>x.a-x.m))}</td></tr></tbody></table></div></div>`};
+}
+function dPortScenario(sc){
+  const R = futbol(), tot = avg(R, r=>sc==="A"?r.cact:r.cmej);
+  return {eye:"Portafolio · " + (sc==="A"?"proceso actual":"con mejoras"), title:"Costo promedio " + money(tot), sub:"Promedio por balón de " + R.length + " referencias",
+    body:`<div class="d-sec"><h4>Rubro × etapa <small>Clic en una etapa para ver cada referencia</small></h4><div class="mx-wrap"><table class="pt"><thead><tr><th>Etapa</th>${RUB.map(rb=>`<th>${rb}</th>`).join("")}<th>Total</th><th>%</th></tr></thead><tbody>
+      ${STG.map(st=>{ const t=avg(R,r=>stTot(r,sc,st)); return `<tr><td>${goBtn(`pstage|${st}`,"<b>"+st+"</b> ›","n")}</td>${RUB.map(rb=>`<td>${money(avg(R,r=>r[sc][rb][st]))}</td>`).join("")}<td><b>${money(t)}</b></td><td>${pct(tot?t/tot:0,0)}</td></tr>`; }).join("")}
+      <tr class="tot"><td>Total</td>${RUB.map(rb=>`<td>${money(avg(R,r=>rbTot(r,sc,rb)))}</td>`).join("")}<td>${money(tot)}</td><td>100 %</td></tr></tbody></table></div></div>
+    <div class="d-sec"><h4>Por referencia <small>Clic para abrir la ficha</small></h4><table class="pt"><thead><tr><th>Referencia</th>${RUB.map(rb=>`<th>${rb}</th>`).join("")}<th>Total</th></tr></thead><tbody>
+      ${R.slice().sort((x,y)=>(sc==="A"?y.cact-x.cact:y.cmej-x.cmej)).map(r=>`<tr><td>${goBtn(`ref|${r.id}`,"<b>"+esc(r.cod)+"</b>"+(r.nota?" <small>"+esc(r.nota)+"</small>":"")+" ›","n")}</td>${RUB.map(rb=>`<td>${money(rbTot(r,sc,rb))}</td>`).join("")}<td><b>${money(sc==="A"?r.cact:r.cmej)}</b></td></tr>`).join("")}</tbody></table></div>`};
+}
+function dPortSavings(){
+  const R = futbol(), items = [];
+  for (const st of STG) for (const rb of RUB){ const d = avg(R,r=>r.A[rb][st]-r.M[rb][st]); if (!dz(d)) items.push({st,rb,d}); }
+  items.sort((x,y)=>y.d-x.d); const tot = items.reduce((s,x)=>s+x.d,0);
+  return {eye:"Portafolio · origen del ahorro", title:"Ahorro promedio de " + money(tot) + " por balón", sub: pct(avg(R,r=>r.cact)?tot/avg(R,r=>r.cact):0) + " del costo actual · " + R.length + " referencias",
+    body:`<div class="d-sec"><h4>Supuestos que generan el ahorro</h4><div class="alerts">${MODEL.P.sup.filter(s=>s.estado!=="Se mantiene").map(s=>`<div class="alert ${s.estado==="Eliminado"?"crit":"ok"}">${s.estado==="Eliminado"?ICON.crit:ICON.ok}<span><b>${esc(s.sub)}</b> (${esc(s.etapa)}): ${s.estado==="Eliminado"?"eliminado":"−"+Math.round(s.pct*100)+" %"}${s.nota?" · "+esc(s.nota):""}</span></div>`).join("")}</div></div>
+    <div class="d-sec"><h4>Dónde se ahorra <small>Promedio por balón · clic en la etapa para ver cada referencia</small></h4><table class="pt"><thead><tr><th>Etapa · rubro</th><th>Ahorro</th><th>% del ahorro</th></tr></thead><tbody>
+      ${items.map(x=>`<tr><td>${goBtn(`pstage|${x.st}`,"<b>"+x.st+"</b> · "+x.rb+" ›","n")}</td><td class="g">${money(x.d)}</td><td>${pct(tot?x.d/tot:0)}</td></tr>`).join("")}<tr class="tot"><td>Total</td><td class="g">${money(tot)}</td><td>100 %</td></tr></tbody></table></div>
+    <div class="d-sec"><h4>Ahorro por referencia <small>Clic para abrir la ficha</small></h4><table class="pt"><thead><tr><th>Referencia</th><th>Actual</th><th>Con mejoras</th><th>Ahorro</th><th>%</th></tr></thead><tbody>
+      ${R.slice().sort((x,y)=>y.ahorro-x.ahorro).map(r=>`<tr><td>${goBtn(`ref|${r.id}`,"<b>"+esc(r.cod)+"</b>"+(r.nota?" <small>"+esc(r.nota)+"</small>":"")+" ›","n")}</td><td>${money(r.cact)}</td><td><b>${money(r.cmej)}</b></td><td class="g">${money(r.ahorro)}</td><td>${pct(r.ahp)}</td></tr>`).join("")}</tbody></table></div>`};
+}
+function dSupuestos(){
+  const P = MODEL.P;
+  return {eye:"Escenario con mejoras", title:"Supuestos de mejora", sub:"Vienen de la hoja Parámetros del Excel",
+    body:`<div class="d-sec"><h4>Por subproceso (fútbol)</h4><div class="mx-wrap"><table class="pt"><thead><tr><th>Subproceso</th><th style="text-align:left">Etapa</th><th style="text-align:left">Estado</th><th>Reducción</th></tr></thead><tbody>
+      ${P.sup.map(s=>`<tr><td><b>${esc(s.sub)}</b></td><td style="text-align:left">${esc(s.etapa)}</td><td style="text-align:left"><span class="state ${s.estado==="Se mantiene"?"mant":esc(s.estado)}">${esc(s.estado)}</span></td><td>${s.estado==="Mejorado"?pct(s.pct,0):"—"}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="d-sec"><h4>Tarifas y factores</h4><dl class="kv"><dt>Tarifa MO por minuto</dt><dd>${money(P.tar.tarifa||0)}</dd><dt>% CIF sobre MO (GOLTY)</dt><dd>${dec(P.tar.cifG)}</dd><dt>% CIF destajo estampado</dt><dd>${dec(P.tar.cifE)}</dd><dt>% CIF destajo ensamble</dt><dd>${dec(P.tar.cifD)}</dd><dt>% CIF ensamble a máquina</dt><dd>${dec(P.tar.cifM)}</dd><dt>Minutos de vulcanizado por preforma</dt><dd>${dec(P.tar.vmin)}</dd><dt>Jornada efectiva</dt><dd>${dec(P.tar.jor,0)} min/día</dd></dl></div>`};
+}
+$("#btnSup").onclick = e => { if (MODEL) openDrawer(()=>dSupuestos(), e.currentTarget, true); };
+
 function explain(r, rb, st){
   const P = MODEL.P.tar, T = P.tarifa||0, f = n => subState(n).factor, a = r.A[rb][st], m = r.M[rb][st];
   const tm = v => `${dec(v)} min × ${money(T)}/min`;
@@ -737,145 +986,17 @@ function explain(r, rb, st){
     <div class="ex-grid"><div><div class="ex-t">Proceso actual</div><div class="ex-v num">${money(a)}</div><ul>${A.map(x=>`<li>${x}</li>`).join("")}</ul></div>
     <div><div class="ex-t">Con mejoras</div><div class="ex-v num" style="color:var(--verde-txt)">${money(m)}${d>0.5?` <span style="font-size:13px">(−${money(d)})</span>`:""}</div><ul>${M.map(x=>`<li>${x}</li>`).join("")}</ul></div></div></div>`;
 }
-function openStage(st, opener){
-  const R = filtered();
-  const rows = R.map(r=>({r, a:stTot(r,"A",st), m:stTot(r,"M",st)})).sort((x,y)=>(y.a-y.m)-(x.a-x.m));
-  const tags = stageTags(st);
-  const body = `<div class="d-kpis">
-     <div class="mini"><div class="l">Promedio actual</div><div class="v num">${money(avg(rows,x=>x.a))}</div><div class="s">por balón</div></div>
-     <div class="mini g"><div class="l">Con mejoras</div><div class="v num">${money(avg(rows,x=>x.m))}</div><div class="s">por balón</div></div>
-     <div class="mini g"><div class="l">Ahorro en la etapa</div><div class="v num">${money(avg(rows,x=>x.a-x.m))}</div><div class="s">promedio por balón</div></div>
-     <div class="mini"><div class="l">Peso en el costo</div><div class="v num">${pct(avg(R,r=>r.cact)?avg(rows,x=>x.a)/avg(R,r=>r.cact):0)}</div><div class="s">del costo actual</div></div></div>
-   <div class="d-sec"><h4>Qué cambia en esta etapa</h4><div class="alerts">${tags.length?tags.map(t=>`<div class="alert ${t.s.estado==="Eliminado"?"crit":"ok"}">${t.s.estado==="Eliminado"?ICON.crit:ICON.ok}<span><b>${esc(t.n)}</b>: ${t.s.estado==="Eliminado"?"se elimina":"se reduce "+Math.round(t.s.pct*100)+" %"}${t.s.nota?" · "+esc(t.s.nota):""}</span></div>`).join(""):`<div class="alert ok" style="background:var(--surface-2);color:var(--ink-2)">${ICON.ok}<span>Los supuestos no cambian esta etapa.</span></div>`}</div></div>
-   <div class="d-sec"><h4>Detalle por referencia <small>Clic para abrir la ficha</small></h4><div class="mx-wrap"><table class="pt"><thead><tr><th>Referencia</th>${RUB.map(rb=>`<th>${rb} actual</th><th>${rb} mejora</th>`).join("")}<th>Total actual</th><th>Total mejora</th><th>Ahorro</th></tr></thead>
-   <tbody>${rows.map(x=>`<tr class="click" data-id="${x.r.id}"><td><b>${esc(x.r.cod)}</b>${x.r.nota?` <span class="pill neutral">${esc(x.r.nota)}</span>`:""}</td>${RUB.map(rb=>`<td>${money(x.r.A[rb][st])}</td><td>${money(x.r.M[rb][st])}</td>`).join("")}<td>${money(x.a)}</td><td><b>${money(x.m)}</b></td><td class="g">${x.a-x.m>0.5?"−"+money(x.a-x.m):"—"}</td></tr>`).join("")}</tbody></table></div></div>`;
-  openDrawer({eye:"Etapa del proceso", title: st, sub: STG_DESC[st] + " · " + R.length + " referencias", body}, opener);
-  $("#dBody").querySelectorAll("tr[data-id]").forEach(tr=>tr.onclick=()=>openRef(tr.dataset.id));
-}
-function openRubro(rb, opener){
-  const R = filtered();
-  const rows = STG.map(st=>({st, a:avg(R,r=>r.A[rb][st]), m:avg(R,r=>r.M[rb][st])}));
-  const ta = rows.reduce((s,x)=>s+x.a,0), tm = rows.reduce((s,x)=>s+x.m,0);
-  const body = `<div class="d-kpis"><div class="mini"><div class="l">${rb} actual</div><div class="v num">${money(ta)}</div><div class="s">${pct(ta/avg(R,r=>r.cact))} del costo</div></div>
-    <div class="mini g"><div class="l">${rb} con mejoras</div><div class="v num">${money(tm)}</div><div class="s">${pct(tm/avg(R,r=>r.cmej))} del costo</div></div>
-    <div class="mini g"><div class="l">Ahorro en ${rb}</div><div class="v num">${money(ta-tm)}</div><div class="s">promedio por balón</div></div>
-    <div class="mini"><div class="l">Etapa de mayor peso</div><div class="v" style="font-size:16px">${rows.slice().sort((x,y)=>y.a-x.a)[0].st}</div><div class="s">en el proceso actual</div></div></div>
-    <div class="d-sec"><h4>Reparto por etapa <small>Promedio por balón · clic para ver la etapa</small></h4><table class="pt"><thead><tr><th>Etapa</th><th>Actual</th><th>% del ${rb}</th><th>Con mejoras</th><th>Ahorro</th></tr></thead><tbody>
-    ${rows.map(x=>`<tr class="click" data-st="${x.st}"><td><b>${x.st}</b></td><td>${money(x.a)}</td><td>${ta?pct(x.a/ta):"—"}</td><td><b>${money(x.m)}</b></td><td class="g">${x.a-x.m>0.5?"−"+money(x.a-x.m):"—"}</td></tr>`).join("")}
-    <tr class="tot"><td>Total</td><td>${money(ta)}</td><td>100 %</td><td>${money(tm)}</td><td class="g">${ta-tm>0.5?"−"+money(ta-tm):"—"}</td></tr></tbody></table></div>
-    <div class="d-sec"><h4>Por referencia</h4><div class="mx-wrap"><table class="pt"><thead><tr><th>Referencia</th><th>Actual</th><th>Con mejoras</th><th>% del costo actual</th></tr></thead><tbody>
-    ${R.map(r=>`<tr class="click" data-id="${r.id}"><td><b>${esc(r.cod)}</b>${r.nota?` <span class="pill neutral">${esc(r.nota)}</span>`:""}</td><td>${money(rbTot(r,"A",rb))}</td><td><b>${money(rbTot(r,"M",rb))}</b></td><td>${pct(rbTot(r,"A",rb)/r.cact)}</td></tr>`).join("")}</tbody></table></div></div>`;
-  openDrawer({eye:"Rubro de costo", title: rb + " · " + RUBN[rb], sub: R.length + " referencias · promedio por balón", body}, opener);
-  $("#dBody").querySelectorAll("tr[data-st]").forEach(tr=>tr.onclick=()=>openStage(tr.dataset.st));
-  $("#dBody").querySelectorAll("tr[data-id]").forEach(tr=>tr.onclick=()=>openRef(tr.dataset.id));
-}
-function openSavings(){
-  const R = filtered();
-  const items = [];
-  for (const st of STG) for (const rb of RUB){ const d = avg(R,r=>r.A[rb][st]-r.M[rb][st]); if (Math.abs(d)>=0.5) items.push({st,rb,d}); }
-  items.sort((a,b)=>b.d-a.d); const tot = items.reduce((s,x)=>s+x.d,0);
-  const sups = MODEL.P.sup.filter(s=>s.estado!=="Se mantiene");
-  const body = `<div class="d-kpis"><div class="mini g"><div class="l">Ahorro promedio</div><div class="v num">${money(tot)}</div><div class="s">por balón</div></div>
-     <div class="mini"><div class="l">Sobre el costo actual</div><div class="v num">${pct(avg(R,r=>r.cact)?tot/avg(R,r=>r.cact):0)}</div><div class="s">${R.length} referencias</div></div>
-     <div class="mini"><div class="l">Mayor ahorro</div><div class="v num">${R.length?pct(Math.max(...R.map(r=>r.ahp))):"—"}</div><div class="s">${R.length?esc(R.slice().sort((a,b)=>b.ahp-a.ahp)[0].cod):""}</div></div>
-     <div class="mini"><div class="l">Menor ahorro</div><div class="v num">${R.length?pct(Math.min(...R.map(r=>r.ahp))):"—"}</div><div class="s">${R.length?esc(R.slice().sort((a,b)=>a.ahp-b.ahp)[0].cod):""}</div></div></div>
-   <div class="d-sec"><h4>De dónde sale el ahorro <small>Etapa y rubro · promedio por balón</small></h4><table class="pt"><thead><tr><th>Etapa · rubro</th><th>Ahorro</th><th>% del ahorro</th></tr></thead><tbody>
-   ${items.map(x=>`<tr class="click" data-st="${x.st}"><td><span class="rdot" style="display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--${x.rb.toLowerCase()})"></span><b>${x.st}</b> · ${x.rb}</td><td class="g">${money(x.d)}</td><td>${pct(tot?x.d/tot:0)}</td></tr>`).join("")}
-   <tr class="tot"><td>Total</td><td>${money(tot)}</td><td>100 %</td></tr></tbody></table></div>
-   <div class="d-sec"><h4>Supuestos que generan el ahorro</h4><div class="alerts">${sups.map(s=>`<div class="alert ${s.estado==="Eliminado"?"crit":"ok"}">${s.estado==="Eliminado"?ICON.crit:ICON.ok}<span><b>${esc(s.sub)}</b> (${esc(s.etapa)}): ${s.estado==="Eliminado"?"eliminado":"−"+Math.round(s.pct*100)+" %"}${s.nota?" · "+esc(s.nota):""}</span></div>`).join("")}</div></div>
-   <div class="d-sec"><h4>Ahorro por referencia</h4><table class="pt"><thead><tr><th>Referencia</th><th>Actual</th><th>Con mejoras</th><th>Ahorro</th><th>%</th></tr></thead><tbody>
-   ${R.slice().sort((a,b)=>b.ahorro-a.ahorro).map(r=>`<tr class="click" data-id="${r.id}"><td><b>${esc(r.cod)}</b>${r.nota?` <span class="pill neutral">${esc(r.nota)}</span>`:""} <span style="color:var(--ink-3);font-size:12px">${esc(r.moda)}</span></td><td>${money(r.cact)}</td><td><b>${money(r.cmej)}</b></td><td class="g">${money(r.ahorro)}</td><td>${pct(r.ahp)}</td></tr>`).join("")}</tbody></table></div>`;
-  openDrawer({eye:"Origen del ahorro", title:"¿De dónde sale el ahorro?", sub:"Diferencia entre el proceso actual y el proceso con mejoras implementadas", body});
-  $("#dBody").querySelectorAll("tr[data-st]").forEach(tr=>tr.onclick=()=>openStage(tr.dataset.st));
-  $("#dBody").querySelectorAll("tr[data-id]").forEach(tr=>tr.onclick=()=>openRef(tr.dataset.id));
-}
-function openScenario(sc){
-  const R = filtered(); const lbl = sc==="A"?"Proceso actual":"Con mejoras";
-  const mat = RUB.map(rb=>({rb, v:STG.map(st=>avg(R,r=>r[sc][rb][st]))}));
-  const tot = mat.reduce((s,x)=>s+x.v.reduce((a,b)=>a+b,0),0);
-  const body = `<div class="d-sec"><h4>Costo promedio por balón · rubro × etapa</h4><div class="mx-wrap"><table class="mx"><thead><tr><th>Rubro</th>${STG.map(s=>`<th>${s}</th>`).join("")}<th>Total</th><th>%</th></tr></thead><tbody>
-    ${mat.map(x=>{const t=x.v.reduce((a,b)=>a+b,0); return `<tr><td><span class="rdot" style="background:var(--${x.rb.toLowerCase()})"></span>${x.rb}</td>${x.v.map(v=>`<td>${money(v)}</td>`).join("")}<td><b>${money(t)}</b></td><td>${pct(tot?t/tot:0,0)}</td></tr>`;}).join("")}
-    <tr class="tot"><td>Total</td>${STG.map((st,i)=>`<td>${money(mat.reduce((s,x)=>s+x.v[i],0))}</td>`).join("")}<td>${money(tot)}</td><td>100 %</td></tr></tbody></table></div></div>
-    <div class="d-sec"><h4>Por referencia <small>Clic para abrir la ficha</small></h4><table class="pt"><thead><tr><th>Referencia</th>${RUB.map(rb=>`<th>${rb}</th>`).join("")}<th>Total</th></tr></thead><tbody>
-    ${R.slice().sort((a,b)=>b[sc==="A"?"cact":"cmej"]-a[sc==="A"?"cact":"cmej"]).map(r=>`<tr class="click" data-id="${r.id}"><td><b>${esc(r.cod)}</b>${r.nota?` <span class="pill neutral">${esc(r.nota)}</span>`:""}</td>${RUB.map(rb=>`<td>${money(rbTot(r,sc,rb))}</td>`).join("")}<td><b>${money(sc==="A"?r.cact:r.cmej)}</b></td></tr>`).join("")}</tbody></table></div>`;
-  openDrawer({eye:"Escenario", title:lbl, sub:"Promedio de " + R.length + " referencias", body});
-  $("#dBody").querySelectorAll("tr[data-id]").forEach(tr=>tr.onclick=()=>openRef(tr.dataset.id));
-}
 
-/* ================== Baloncesto ================== */
-function renderBal(){
-  const B = MODEL.bal, el = $("#v-baloncesto");
-  const flow = `<div class="bflow">${B.stages.map((s,i)=>`${i?'<span class="ar">→</span>':""}<span class="st">${esc(s)}</span>`).join("")}</div>`;
-  if (!B.refs.length){
-    el.innerHTML = `<div class="empty"><div><div class="eyebrow" style="color:var(--verde-txt)">Baloncesto</div><h2>Aún no hay referencias de baloncesto en el Excel</h2></div>
-      <p>Cuando se diligencie la hoja <b>Baloncesto</b> (MP, MO y CIF por etapa) y se cargue el archivo con <b>Actualizar desde Excel</b>, aquí aparecerá la estructura de costos de cada referencia. El escenario con mejoras aplica, por ahora, solo a fútbol.</p>
-      <div><div class="flabel" style="margin-bottom:8px">Flujo de proceso de baloncesto</div>${flow}</div></div>`;
-    return;
-  }
-  const R = B.refs, S = B.stages, a = avg(R,r=>r.cact);
-  const stv = S.map(st=>({st, v:avg(R,r=>RUB.reduce((s,rb)=>s+r.A[rb][st],0))})); const max = Math.max(1,...stv.map(x=>x.v));
-  el.innerHTML = `<div class="kpis"><div class="kpi" style="cursor:default"><span class="k-lbl">Referencias</span><span class="k-val num">${R.length}</span></div>
-    <div class="kpi" style="cursor:default"><span class="k-lbl">Costo promedio</span><span class="k-val num">${money(a)}</span><span class="k-sub">por balón · proceso actual</span></div>
-    ${RUB.slice(0,2).map(rb=>`<div class="kpi" style="cursor:default"><span class="k-lbl">${RUBN[rb]}</span><span class="k-val num">${pct(a?avg(R,r=>S.reduce((s,st)=>s+r.A[rb][st],0))/a:0)}</span><span class="k-sub">del costo</span></div>`).join("")}</div>
-    <div class="card"><div class="card-h"><div><h2>Costo por etapa</h2><p class="hint">Promedio por balón · proceso actual</p></div></div>${flow}
-    <div class="stages" style="margin-top:14px">${stv.map(x=>`<div class="stage" style="cursor:default"><div class="s-name">${esc(x.st)}</div><div class="bars"><div class="brow"><div class="btrack"><div class="bfill act" style="width:${x.v/max*100}%"></div></div><span class="bval num">${money(x.v)}</span></div></div><div class="delta zero num">${pct(a?x.v/a:0)}</div></div>`).join("")}</div></div>
-    <div class="card"><div class="card-h"><div><h2>Referencias</h2><p class="hint">Clic en una fila para ver su matriz rubro × etapa.</p></div></div><div class="tscroll"><table class="refs"><thead><tr><th>Referencia</th>${RUB.map(rb=>`<th class="r">${rb}</th>`).join("")}<th class="r">Costo total</th><th></th></tr></thead><tbody>
-    ${R.map(r=>`<tr data-b="${r.id}" tabindex="0"><td><div class="code">${esc(r.cod)}</div><div class="name">${esc(r.nom)}</div></td>${RUB.map(rb=>`<td class="r num">${money(S.reduce((s,st)=>s+r.A[rb][st],0))}</td>`).join("")}<td class="r num big">${money(r.cact)}</td><td>${ICON.chev}</td></tr>`).join("")}</tbody></table></div></div>`;
-  el.querySelectorAll("tr[data-b]").forEach(tr=>{ const go=()=>{ const r=R.find(x=>x.id===tr.dataset.b);
-    const body = `<div class="mx-wrap"><table class="mx"><thead><tr><th>Rubro</th>${S.map(s=>`<th>${esc(s)}</th>`).join("")}<th>Total</th></tr></thead><tbody>${RUB.map(rb=>`<tr><td><span class="rdot" style="background:var(--${rb.toLowerCase()})"></span>${rb}</td>${S.map(st=>`<td>${money(r.A[rb][st])}</td>`).join("")}<td><b>${money(S.reduce((s,st)=>s+r.A[rb][st],0))}</b></td></tr>`).join("")}<tr class="tot"><td>Total</td>${S.map(st=>`<td>${money(RUB.reduce((s,rb)=>s+r.A[rb][st],0))}</td>`).join("")}<td>${money(r.cact)}</td></tr></tbody></table></div>`;
-    openDrawer({eye:"Baloncesto", title:r.cod, sub:r.nom, body}, tr); }; tr.onclick=go; tr.onkeydown=e=>{if(e.key==="Enter")go();}; });
-}
-
-/* ================== Supuestos ================== */
-function renderSup(){
-  const P = MODEL.P, el = $("#v-supuestos");
-  const fl = P.flu.filter(x=>/Fútbol/.test(x.cons) || x.cons==="" && P.flu.indexOf(x) < 6).slice(0,6);
-  el.innerHTML = `<div class="sup-grid">
-    <div class="card"><div class="card-h"><div><h2>Supuestos por subproceso (fútbol)</h2><p class="hint">Vienen de la hoja Parámetros del Excel. Cámbielos allí y vuelva a cargar el archivo.</p></div></div>
-      <div class="tscroll"><table class="pt" style="min-width:620px"><thead><tr><th>Subproceso</th><th style="text-align:left">Etapa</th><th style="text-align:left">Estado</th><th>Reducción</th><th>Costo adicional</th><th style="text-align:left">Nota</th></tr></thead><tbody>
-      ${P.sup.map(s=>`<tr><td><b>${esc(s.sub)}</b></td><td style="text-align:left">${esc(s.etapa)}</td><td style="text-align:left"><span class="state ${s.estado==="Se mantiene"?"mant":esc(s.estado)}">${esc(s.estado)}</span></td><td>${s.estado==="Mejorado"?pct(s.pct,0):"—"}</td><td>${s.add?money(s.add)+" "+esc(s.rubro||""):"—"}</td><td style="text-align:left;color:var(--ink-2);font-size:12px;white-space:normal">${esc(s.nota)}</td></tr>`).join("")}</tbody></table></div></div>
-    <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
-      <div class="card"><div class="card-h"><div><h2>Flujo resultante</h2><p class="hint">Fútbol · Thermotech y Laminado</p></div></div><div class="flows">
-        ${fl.map(x=>`<div class="fl"><div class="e">${esc(x.etapa)}</div><div><div class="a">${esc(String(x.act).split(" · ")[0])}</div><div class="m">${esc(x.mej||"—")}</div></div></div>`).join("")}</div></div>
-      <div class="card"><div class="card-h"><div><h2>Tarifas y factores</h2></div></div><dl class="kv">
-        <dt>Tarifa MO por minuto</dt><dd>${money(P.tar.tarifa||0)}</dd><dt>% CIF sobre MO (GOLTY)</dt><dd>${dec(P.tar.cifG)}</dd><dt>% CIF destajo estampado</dt><dd>${dec(P.tar.cifE)}</dd>
-        <dt>% CIF destajo ensamble</dt><dd>${dec(P.tar.cifD)}</dd><dt>% CIF ensamble a máquina</dt><dd>${dec(P.tar.cifM)}</dd><dt>Minutos de vulcanizado por preforma</dt><dd>${dec(P.tar.vmin)}</dd><dt>Jornada efectiva</dt><dd>${dec(P.tar.jor,0)} min/día</dd></dl></div>
-    </div></div>`;
-}
-
-/* ================== Tooltip ================== */
-const tip = $("#tip");
-document.addEventListener("pointermove", e => {
-  const t = e.target.closest && e.target.closest("[data-tip]");
-  if (!t || e.pointerType === "touch"){ tip.classList.remove("on"); return; }
-  const p = t.dataset.tip.split("|");
-  if (RUB.includes(p[0])) tip.innerHTML = `<b>${p[0]} · ${RUBN[p[0]]}</b><div class="tr"><span>${p[1]}</span><span class="num">${money(+p[2])}</span></div><div class="tr"><span>Participación</span><span class="num">${pct(+p[3])}</span></div>`;
-  else tip.innerHTML = `<b>${p[0]}</b><div class="tr"><span>${p[1]}</span><span class="num">${money(+p[2])}</span></div><div style="opacity:.7;margin-top:2px">Clic para ver el detalle</div>`;
-  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(e.clientY + 14, innerHeight - tip.offsetHeight - 8);
-  tip.style.left = x + "px"; tip.style.top = y + "px"; tip.classList.add("on");
-});
-
-/* ================== Vistas, carga y arranque ================== */
-function setView(v){
-  if (!["futbol","baloncesto","supuestos"].includes(v)) v = "futbol"; view = v;
-  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", t.dataset.view===v));
-  document.querySelectorAll(".view").forEach(s=>s.hidden = s.id !== "v-"+v);
-}
-document.querySelector(".tabs").onclick = e => { const t = e.target.closest(".tab"); if (!t) return; if (location.hash !== "#"+t.dataset.view) location.hash = t.dataset.view; else setView(t.dataset.view); };
-addEventListener("hashchange", () => setView(location.hash.slice(1)));
 function renderAll(){
   const m = MODEL.meta;
   const vacio = !MODEL.futbol.length && !MODEL.bal.refs.length;
-  $("#gate").hidden = !vacio; document.querySelector(".tabs").hidden = vacio;
-  if (vacio){ document.querySelectorAll(".view").forEach(s=>s.hidden=true); $("#src").hidden = true; $("#fileLbl").hidden = true; $("#resetBtn").hidden = true; $("#footSrc").textContent = "Informe gerencial de costos · Grupo Y"; return; }
-  setView(view);
+  $("#gate").hidden = !vacio; document.querySelector(".crumbbar").hidden = vacio;
+  if (vacio){ $("#vPort").hidden = true; $("#vRef").hidden = true; $("#src").hidden = true; $("#fileLbl").hidden = true; $("#resetBtn").hidden = true; $("#footSrc").textContent = "Informe gerencial de costos · Grupo Y"; return; }
   $("#src").innerHTML = m.live ? "" : `Fuente: <b>${esc(m.archivo)}</b><br>${m.local?"Cargado el "+esc(m.corte):"Corte "+esc(m.corte)}`;
   $("#src").hidden = !!m.live;
-  $("#footSrc").textContent = `Informe gerencial de costos · Fuente: ${m.archivo}${m.live?" (sincronizado desde SharePoint)":""} · Valores en pesos colombianos (COP) por balón.`;
-  $("#c-futbol").textContent = MODEL.futbol.length; $("#c-bal").textContent = MODEL.bal.refs.length;
-  $("#resetBtn").hidden = true;
-  $("#fileLbl").hidden = LIVE.on;
-  renderFutbol(); renderBal(); renderSup();
+  $("#resetBtn").hidden = true; $("#fileLbl").hidden = LIVE.on;
+  $("#footSrc").textContent = `Informe gerencial de costos · Fuente: ${m.archivo}${m.live?" (publicado)":""} · Valores en pesos colombianos (COP) por balón.`;
+  route();
 }
 function toast(msg, err){ const t=$("#toast"); t.textContent=msg; t.classList.toggle("err",!!err); t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),3600); }
 function modelFromBuffer(buf, meta){
@@ -913,7 +1034,7 @@ function start(){
   catch(_){ MODEL = buildModel(PUBLISHED, PUBLISHED._meta); }
   const fmt = d => { const p = String(d).split("-"); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : d; };
   if (!MODEL.meta.local) MODEL.meta.corte = fmt(MODEL.meta.corte);
-  setView(location.hash.slice(1) || "futbol"); renderAll();
+  renderAll();
   conectar();
 }
 
