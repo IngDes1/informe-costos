@@ -2,11 +2,11 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Costos de Balones Grupo Y</title><style>body{margin:0}</style></head><body>
 <title>Costos de Balones Grupo Y</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.39.0/lib/msal-browser.min.js"></script>
 <style>
 /* Layout: banda grafito con marca Grupo Y → pestañas fijas → resumen (KPI) → gráficos → tabla de referencias → panel lateral de detalle */
 :root{
@@ -376,7 +376,7 @@ footer .lg-dark{display:none}
 <main>
   <div class="wrap">
     <div class="banner" id="banner" hidden></div>
-    <div class="gate" id="gate" hidden><div class="eyebrow" style="color:var(--verde-txt)">Acceso con cuenta de la empresa</div><h2 id="gateT">Conectando con SharePoint…</h2><p id="gateP">El informe lee el Excel de costos directamente desde SharePoint con su cuenta de Microsoft 365.</p><button type="button" class="btn" id="gateBtn" hidden>Iniciar sesión con Microsoft</button></div>
+    <div class="gate" id="gate" hidden><div class="eyebrow" style="color:var(--verde-txt)">Datos del Excel de costos</div><h2 id="gateT">Conectando con SharePoint…</h2><p id="gateP">El informe lee el Excel de costos publicado junto a esta página.</p><button type="button" class="btn" id="gateBtn" hidden>Iniciar sesión con Microsoft</button></div>
     <!-- FÚTBOL -->
     <section class="view" id="v-futbol" aria-labelledby="t-futbol">
       <div class="toolbar">
@@ -428,20 +428,15 @@ footer .lg-dark{display:none}
 
 <script>
 /* =====================================================================
-   CONEXIÓN CON EL EXCEL EN SHAREPOINT  ·  la configura TI una sola vez
-   - clientId  : "Id. de aplicación (cliente)" del registro en Microsoft Entra ID
-   - tenantId  : "Id. de directorio (inquilino)" de la empresa
-   - excelUrl  : enlace al Excel en SharePoint (Compartir → Copiar vínculo, "Personas de <empresa>")
-   - refrescarMin : cada cuántos minutos se revisa si el Excel cambió
-   Si se deja vacío, el informe muestra los datos incluidos (foto) y el botón de carga manual.
+   FUENTE DE DATOS
+   El informe lee el Excel publicado junto a esta página (mismo sitio de GitHub Pages).
+   GitHub Actions lo copia desde SharePoint (o desde la carpeta datos/ del repositorio).
    ===================================================================== */
-const CONEXION = {
-  clientId:   "",
-  tenantId:   "",
-  excelUrl:   "",
-  refrescarMin: 5
+const FUENTE = {
+  archivo: "costos.xlsx",   // nombre del Excel publicado junto a index.html
+  refrescarMin: 5           // cada cuántos minutos revisa si hay una versión nueva
 };
-const PUBLISHED = {"Fútbol": [], "Baloncesto": [], "Parámetros": [], "_meta": {"archivo": "Costos_Balones_por_Proceso.xlsx (SharePoint)", "corte": "—"}};
+const PUBLISHED = {"Fútbol": [], "Baloncesto": [], "Parámetros": [], "_meta": {"archivo": "Costos_Balones_por_Proceso.xlsx", "corte": "—"}};
 const STG = ["Cuero","Estampado","Preforma","Backin","Ensamble","Terminado"];
 const RUB = ["MP","MO","CIF"];
 const RUBN = {MP:"Materia prima",MO:"Mano de obra",CIF:"Costos indirectos"};
@@ -876,9 +871,9 @@ function renderAll(){
   setView(view);
   $("#src").innerHTML = m.live ? "" : `Fuente: <b>${esc(m.archivo)}</b><br>${m.local?"Cargado el "+esc(m.corte):"Corte "+esc(m.corte)}`;
   $("#src").hidden = !!m.live;
-  $("#footSrc").textContent = `Informe gerencial de costos · Fuente: ${m.archivo}${m.live?" (SharePoint, en vivo)":""} · Valores en pesos colombianos (COP) por balón.`;
+  $("#footSrc").textContent = `Informe gerencial de costos · Fuente: ${m.archivo}${m.live?" (sincronizado desde SharePoint)":""} · Valores en pesos colombianos (COP) por balón.`;
   $("#c-futbol").textContent = MODEL.futbol.length; $("#c-bal").textContent = MODEL.bal.refs.length;
-  $("#resetBtn").hidden = !m.local || LIVE.on;
+  $("#resetBtn").hidden = true;
   $("#fileLbl").hidden = LIVE.on;
   renderFutbol(); renderBal(); renderSup();
 }
@@ -904,7 +899,7 @@ $("#file").onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   try {
         const {raw, m} = modelFromBuffer(await f.arrayBuffer(), {archivo:f.name, corte:new Date().toLocaleDateString("es-CO"), local:true});
-    MODEL = m; try { localStorage.setItem("costos-balones-raw", JSON.stringify({raw, meta:m.meta})); } catch(_){}
+    MODEL = m;
     renderAll(); toast(`Datos actualizados: ${m.futbol.length} referencias de fútbol y ${m.bal.refs.length} de baloncesto.`);
   } catch(err){ toast(err.message || "No se pudo leer el archivo.", true); }
   e.target.value = "";
@@ -913,7 +908,7 @@ $("#resetBtn").onclick = () => { try { localStorage.removeItem("costos-balones-r
 
 function start(){
   let saved = null; try { saved = JSON.parse(localStorage.getItem("costos-balones-raw") || "null"); } catch(_){}
-  if (isConfigured()) saved = null;   // conectado: nunca se usan datos guardados en el navegador
+  saved = null;   // siempre se leen los datos publicados
   try { MODEL = saved ? buildModel(saved.raw, saved.meta) : buildModel(PUBLISHED, PUBLISHED._meta); if (saved && !MODEL.futbol.length) throw 0; }
   catch(_){ MODEL = buildModel(PUBLISHED, PUBLISHED._meta); }
   const fmt = d => { const p = String(d).split("-"); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : d; };
@@ -922,96 +917,62 @@ function start(){
   conectar();
 }
 
-/* ================== Conexión en vivo con SharePoint (Microsoft Graph) ================== */
-const LIVE = {on:false, pca:null, account:null, etag:null, timer:null, busy:false};
-const SCOPES = ["Files.Read.All"];
-const EN_MARCO = (() => { try { return window.self !== window.top; } catch(_) { return true; } })();
-const login = () => EN_MARCO ? LIVE.pca.loginPopup({scopes:SCOPES}).then(r=>{ LIVE.account=r.account; return conectarCuenta(); }).catch(falloConexion) : LIVE.pca.loginRedirect({scopes:SCOPES});
-const isConfigured = () => CONEXION.clientId && CONEXION.tenantId && CONEXION.excelUrl;
+/* ================== Lectura del Excel publicado ================== */
+const LIVE = {on:false, firma:null, timer:null, busy:false};
 function liveStatus(kind, html){ const el=$("#live"); el.hidden=false; el.className="live "+kind; $("#liveTxt").innerHTML=html; }
 function banner(html){ const b=$("#banner"); if(!html){ b.hidden=true; b.innerHTML=""; return;} b.hidden=false; b.innerHTML=ICON.warn+html; }
-function shareId(url){ const b64 = btoa(unescape(encodeURIComponent(url.trim()))).replace(/=+$/,"").replace(/\//g,"_").replace(/\+/g,"-"); return "u!" + b64; }
+function gate(titulo, texto, boton){ $("#gateT").textContent = titulo; $("#gateP").textContent = texto; const b=$("#gateBtn"); b.hidden=!boton; if (boton){ b.textContent=boton.t; b.onclick=boton.f; } }
 const hhmm = d => d.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});
 const fechaHora = d => d.toLocaleDateString("es-CO",{day:"2-digit",month:"short"}) + " " + hhmm(d);
+const urlExcel = () => FUENTE.archivo + "?v=" + Date.now();
 
-async function conectar(){
-  if (!isConfigured()) { gate("Falta configurar la conexión", "TI debe completar el bloque CONEXION de este archivo (ver la guía de conexión). Mientras tanto puede cargar el Excel manualmente.", {t:"Cargar Excel desde este computador", f:()=>$("#file").click()}); return; }
-  if (location.protocol === "file:") { gate("Abra el informe desde su dirección web", "Al abrir el archivo desde el computador no es posible iniciar sesión en Microsoft. Use la dirección publicada por TI.", null); banner(`<span><b>Conexión con SharePoint no disponible al abrir el archivo desde el computador.</b> Abra el informe desde su dirección web publicada. Se muestran los datos incluidos.</span>`); return; }
-  if (typeof msal === "undefined") { banner(`<span><b>No se pudo cargar el inicio de sesión de Microsoft.</b> Revise la conexión a internet. Se muestran los datos incluidos.</span>`); return; }
-  liveStatus("load","Conectando con SharePoint…");
-  try {
-    LIVE.pca = new msal.PublicClientApplication({
-      auth:{ clientId:CONEXION.clientId, authority:"https://login.microsoftonline.com/"+CONEXION.tenantId, redirectUri: location.origin + location.pathname, navigateToLoginRequestUrl:true },
-      cache:{ cacheLocation:"localStorage" }
-    });
-    const res = await LIVE.pca.handleRedirectPromise();
-    LIVE.account = (res && res.account) || LIVE.pca.getAllAccounts()[0] || null;
-    if (!LIVE.account){
-      let tried = false; try { tried = sessionStorage.getItem("cb-login") === "1"; } catch(_){}
-      if (!tried && !EN_MARCO){ try { sessionStorage.setItem("cb-login","1"); } catch(_){} await LIVE.pca.loginRedirect({scopes:SCOPES}); return; }
-      liveStatus("err","Sin sesión de Microsoft");
-      gate("Inicie sesión para ver el informe", "Use su cuenta de Microsoft 365 de la empresa. Solo verá los datos si tiene acceso al Excel en SharePoint.", {t:"Iniciar sesión con Microsoft", f:login});
-      if (MODEL.futbol.length) banner(`<span><b>Inicie sesión con su cuenta de la empresa</b> para ver los datos en vivo del Excel.</span><button type="button" id="btnLogin">Iniciar sesión</button>`);
-      if ($("#btnLogin")) $("#btnLogin").onclick = login;
-      return;
-    }
-    await conectarCuenta();
-  } catch(err){ falloConexion(err); }
-}
-async function conectarCuenta(){
-  try {
-    try { sessionStorage.removeItem("cb-login"); } catch(_){}
-    await leerExcel(true);
-    clearInterval(LIVE.timer);
-    LIVE.timer = setInterval(() => { if (document.visibilityState === "visible") leerExcel(false); }, Math.max(1, CONEXION.refrescarMin||5) * 60000);
-    if (!LIVE.vis){ LIVE.vis = true; document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && LIVE.account) leerExcel(false); }); }
-  } catch(err){ falloConexion(err); }
-}
-async function token(){
-  try { return (await LIVE.pca.acquireTokenSilent({scopes:SCOPES, account:LIVE.account})).accessToken; }
-  catch(err){ if (err instanceof msal.InteractionRequiredAuthError){ if (EN_MARCO) return (await LIVE.pca.acquireTokenPopup({scopes:SCOPES, account:LIVE.account})).accessToken; await LIVE.pca.acquireTokenRedirect({scopes:SCOPES, account:LIVE.account}); return null; } throw err; }
-}
-async function graph(path, tk){
-  const r = await fetch("https://graph.microsoft.com/v1.0" + path, {headers:{Authorization:"Bearer " + tk}});
-  if (!r.ok){
-    const msg = {401:"La sesión expiró. Recargue la página.",403:"Su cuenta no tiene permiso para leer el Excel en SharePoint. Pida acceso al archivo.",404:"No se encontró el Excel en SharePoint. Revise el enlace configurado o si el archivo se movió."}[r.status] || ("SharePoint respondió con error " + r.status + ".");
-    const e = new Error(msg); e.status = r.status; throw e;
+function conectar(){
+  if (location.protocol === "file:"){
+    gate("Abra el informe desde su dirección web", "Al abrir el archivo desde el computador el navegador no permite leer el Excel publicado. Use la dirección de GitHub Pages, o cargue el Excel manualmente.", {t:"Cargar Excel desde este computador", f:()=>$("#file").click()});
+    return;
   }
-  return r.json();
+  gate("Cargando datos…", "Leyendo el Excel de costos publicado.", null);
+  leerExcel(true);
+  clearInterval(LIVE.timer);
+  LIVE.timer = setInterval(() => { if (document.visibilityState === "visible") leerExcel(false); }, Math.max(1, FUENTE.refrescarMin||5) * 60000);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") leerExcel(false); });
 }
 async function leerExcel(forzar){
   if (LIVE.busy) return; LIVE.busy = true;
   try {
-    const tk = await token(); if (!tk) return;
-    const item = await graph("/shares/" + shareId(CONEXION.excelUrl) + "/driveItem", tk);
-    if (!forzar && item.eTag && item.eTag === LIVE.etag){ estadoVivo(item); return; }
-    const dl = item["@microsoft.graph.downloadUrl"];
-    if (!dl) throw new Error("SharePoint no entregó el archivo para descarga.");
-    const buf = await (await fetch(dl)).arrayBuffer();
-    const mod = new Date(item.lastModifiedDateTime);
-    const {m} = modelFromBuffer(buf, {archivo:item.name, corte:fechaHora(mod), live:true});
+    // 1) ¿cambió? (consulta liviana de encabezados)
+    let firma = null, mod = null;
+    try {
+      const h = await fetch(urlExcel(), {method:"HEAD", cache:"no-store"});
+      if (h.ok){ firma = h.headers.get("ETag") || h.headers.get("Last-Modified"); const lm = h.headers.get("Last-Modified"); if (lm) mod = new Date(lm); }
+    } catch(_){}
+    if (!forzar && LIVE.on && firma && firma === LIVE.firma){ estadoVivo(); return; }
+    // 2) descargar y leer
+    const r = await fetch(urlExcel(), {cache:"no-store"});
+    if (r.status === 404) throw new Error(`No se encontró ${FUENTE.archivo} junto al informe. Revise que GitHub Actions haya terminado de publicar.`);
+    if (!r.ok) throw new Error(`El sitio respondió con error ${r.status} al pedir el Excel.`);
+    if (!mod){ const lm = r.headers.get("Last-Modified"); if (lm) mod = new Date(lm); }
+    const {m} = modelFromBuffer(await r.arrayBuffer(), {archivo:"Costos_Balones_por_Proceso.xlsx", corte: mod ? fechaHora(mod) : fechaHora(new Date()), live:true});
     const primera = !LIVE.on;
-    LIVE.on = true; LIVE.etag = item.eTag; LIVE.item = item; LIVE.leido = new Date();
+    LIVE.on = true; LIVE.firma = firma; LIVE.mod = mod;
     MODEL = m; banner(null);
     const drawerOpen = $("#drawer").classList.contains("on");
-    renderAll(); estadoVivo(item);
-    if (!primera) toast("El Excel cambió en SharePoint: el informe se actualizó.");
+    renderAll(); estadoVivo();
+    if (!primera) toast("Hay una versión nueva del Excel: el informe se actualizó.");
     if (drawerOpen) closeDrawer();
-  } catch(err){ falloConexion(err); }
+  } catch(err){ falloLectura(err); }
   finally { LIVE.busy = false; }
 }
-function estadoVivo(item){
-  const mod = new Date(item.lastModifiedDateTime); const quien = item.lastModifiedBy && item.lastModifiedBy.user ? item.lastModifiedBy.user.displayName : "";
-  liveStatus("on", `<b>En vivo</b> · ${esc(item.name)} · guardado ${fechaHora(mod)}${quien?" por "+esc(quien):""} · revisado ${hhmm(new Date())} <button type="button" id="btnRefresh">Actualizar</button>`);
+function estadoVivo(){
+  liveStatus("on", `<b>Datos del Excel</b> · publicado ${LIVE.mod?fechaHora(LIVE.mod):"—"} · revisado ${hhmm(new Date())} <button type="button" id="btnRefresh">Actualizar</button>`);
   $("#btnRefresh").onclick = () => leerExcel(true);
 }
-function gate(titulo, texto, boton){ $("#gateT").textContent = titulo; $("#gateP").textContent = texto; const b=$("#gateBtn"); b.hidden=!boton; if (boton){ b.textContent=boton.t; b.onclick=boton.f; } }
-function falloConexion(err){
+function falloLectura(err){
   console.error(err);
-  gate("No se pudo leer el Excel en SharePoint", (err && err.message) || "Error desconocido.", {t:"Reintentar", f:()=> LIVE.account ? leerExcel(true) : conectar()});
-  liveStatus("err", `Sin conexión con SharePoint <button type="button" id="btnRetry">Reintentar</button>`);
-  $("#btnRetry").onclick = () => LIVE.account ? leerExcel(true) : conectar();
-  banner(`<span><b>No se pudo leer el Excel en SharePoint.</b> ${esc(err && err.message || "Error desconocido.")} ${LIVE.on?"Se mantienen los últimos datos leídos.":"Se muestran los datos incluidos en el informe."}</span>`);
+  liveStatus("err", `No se pudo leer el Excel <button type="button" id="btnRetry">Reintentar</button>`);
+  $("#btnRetry").onclick = () => leerExcel(true);
+  if (LIVE.on) banner(`<span><b>No se pudo revisar si hay datos nuevos.</b> ${esc(err && err.message || "")} Se mantienen los últimos datos leídos.</span>`);
+  else gate("No se pudo leer el Excel de costos", (err && err.message) || "Error desconocido.", {t:"Reintentar", f:()=>leerExcel(true)});
 }
 start();
 </script>
